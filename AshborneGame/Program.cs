@@ -1,4 +1,5 @@
-﻿namespace AshborneGame
+﻿
+namespace AshborneGame
 {
     internal class Program
     {
