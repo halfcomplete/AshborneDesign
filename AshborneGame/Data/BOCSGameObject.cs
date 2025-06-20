@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using TextRPG.ConsoleApp.Data.Enums;
-using TextRPG.ConsoleApp.Data.ItemSystem.ItemBehaviourModules;
-using TextRPG.ConsoleApp.Game.Output;
+﻿using AshborneGame.Data.BOCS.ItemSystem.ItemBehaviourModules;
+using AshborneGame.Core;
 
-namespace TextRPG.ConsoleApp.Data.Objects
+namespace AshborneGame.ConsoleApp.Data.Objects
 {
     public abstract class BOCSGameObject
     {
