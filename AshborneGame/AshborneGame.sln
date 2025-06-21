@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36109.1 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AshborneGame", "..\..\C# Projects\AshborneGame\AshborneGame\AshborneGame.csproj", "{FF42BD31-590B-4674-A2D8-3996E47139DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AshborneGame", "AshborneGame.csproj", "{2DC4F083-B8B5-43A5-32FC-A9EE1C84B22F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FF42BD31-590B-4674-A2D8-3996E47139DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF42BD31-590B-4674-A2D8-3996E47139DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF42BD31-590B-4674-A2D8-3996E47139DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF42BD31-590B-4674-A2D8-3996E47139DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DC4F083-B8B5-43A5-32FC-A9EE1C84B22F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DC4F083-B8B5-43A5-32FC-A9EE1C84B22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DC4F083-B8B5-43A5-32FC-A9EE1C84B22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DC4F083-B8B5-43A5-32FC-A9EE1C84B22F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {ADDCCA32-25A2-4E2F-992D-58491E9B7FB8}
+		SolutionGuid = {429AE5D8-95AB-45DE-B94C-CF4A6B66694E}
 	EndGlobalSection
 EndGlobal
