@@ -31,7 +31,7 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem
         /// <summary>
         /// Adds an item to the inventory, stacking where possible.
         /// </summary>
-        public void AddItem(Item item, int count)
+        public void AddItem(Item item, int count = 1)
         {
             if (item == null)
                 throw new ArgumentNullException(nameof(item));
@@ -66,9 +66,10 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem
                         continue;
                     }
 
-                    foreach (ItemBehaviourBase behaviour in kvp.Value)
+                    foreach (var behaviour in kvp.Value)
                     {
-                        var clone = behaviour.DeepClone();
+                        dynamic dynamicBehaviour = behaviour;
+                        var clone = dynamicBehaviour.DeepClone();
                         newItem.AddBehaviour(kvp.Key, clone);
                         if (clone is IAwareOfParentObject awareOfParent)
                         {
@@ -85,7 +86,7 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem
         /// <summary>
         /// Removes a quantity of an item from the inventory.
         /// </summary>
-        public void RemoveItem(Item item, int count)
+        public void RemoveItem(Item item, int count = 1)
         {
             if (item == null)
                 throw new ArgumentNullException(nameof(item));

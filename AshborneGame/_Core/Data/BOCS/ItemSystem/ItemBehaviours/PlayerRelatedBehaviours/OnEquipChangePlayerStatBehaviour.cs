@@ -1,0 +1,37 @@
+﻿using AshborneGame._Core.Game;
+using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
+using AshborneGame._Core.Globals.Enums;
+using AshborneGame._Core.Globals.Services;
+
+namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.PlayerRelatedBehaviours
+{
+    internal class OnEquipChangePlayerStatBehaviour : ItemBehaviourBase<OnEquipChangePlayerStatBehaviour>, IActOnEquip
+    {
+        private PlayerStatTypes StatType { get; set; }
+
+        private int ChangeAmount { get; set; }
+
+        public OnEquipChangePlayerStatBehaviour(int changeAmount, PlayerStatTypes statType)
+        {
+            StatType = statType;
+            ChangeAmount = changeAmount;
+        }
+
+        public void OnEquip()
+        {
+            GameEngine.Player.Stats.AddBonus(StatType, ChangeAmount);
+            IOService.Output.WriteLine($"Your {StatType} has been increased by {ChangeAmount} while this item is equipped.");
+        }
+
+        public void OnUnequip()
+        {
+            GameEngine.Player.Stats.RemoveBonus(StatType, ChangeAmount);
+            IOService.Output.WriteLine($"Your {StatType} has been decreased by {ChangeAmount} after unequipping this item.");
+        }
+
+        public override OnEquipChangePlayerStatBehaviour DeepClone()
+        {
+            return new OnEquipChangePlayerStatBehaviour(ChangeAmount, StatType);
+        }
+    }
+}

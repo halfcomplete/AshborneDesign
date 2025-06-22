@@ -59,7 +59,7 @@ namespace AshborneGame._Core.Scenes
         /// <param name="name">The name of the location.</param>
         /// <param name="description">The description of the location.</param>
         /// <param name="minimumVisibility">The minimum visibility level required to see this location.</param>
-        public Location(string name, string description, int minimumVisibility) 
+        public Location(string name, string description, int minimumVisibility)
             : this(name, description)
         {
             _minimumVisibility = minimumVisibility;
@@ -193,6 +193,20 @@ namespace AshborneGame._Core.Scenes
                 contextualDescription += $". It is barely lit by your torch.";
             }
             return $"You are at {Name}. {contextualDescription}";
+        }
+
+        public string GetFullDescription()
+        {
+            string description = GetDescription();
+            if (_exits.Count > 0)
+            {
+                description += "\n" + GetExits();
+            }
+            if (_sublocations.Count > 0)
+            {
+                description += "\n" + GetSublocations();
+            }
+            return description;
         }
     }
 }

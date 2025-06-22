@@ -7,12 +7,17 @@ using Moq;
 using System.Numerics;
 using System.Xml.Linq;
 using Xunit;
+using FluentAssertions;
+using AshborneGame._Core.Data.BOCS.ObjectSystem;
+using AshborneGame._Core.Globals.Interfaces;
 
 public class TalkToNPCCommandTests
 {
     [Fact]
     public void TalkToNPC_Fails_When_NoSublocation()
     {
+        IOService.Initialise(new Mock<IInputHandler>().Object, new Mock<IOutputHandler>().Object);
+
         // Arrange
         var command = new TalkToNPCCommand();
         var player = new Player();
@@ -28,13 +33,14 @@ public class TalkToNPCCommandTests
     public void TalkToNPC_Fails_When_ObjectIsNotNPC()
     {
         var command = new TalkToNPCCommand();
-        var player = new Player
-        {
-            CurrentSublocation = new Sublocation
-            {
-                Object = new object() // Not an NPC
-            }
-        };
+        var player = new Player();
+        Sublocation testSublocation = new Sublocation(
+            new Location("Test Location", "A place for testing."),
+            new GameObject("Test object"),
+            "Test Sublocation",
+            "A sublocation for testing.",
+            5
+        );
 
         var result = command.TryExecute(new List<string> { "Elias" }, player);
 
@@ -46,13 +52,15 @@ public class TalkToNPCCommandTests
     {
         var npc = new TestNPC("Elias");
         var command = new TalkToNPCCommand();
-        var player = new Player
-        {
-            CurrentSublocation = new Sublocation
-            {
-                Object = npc
-            }
-        };
+        Sublocation testSublocation = new Sublocation(
+            new Location("Test Location", "A place for testing."),
+            npc,
+            "Test Sublocation",
+            "A sublocation for testing.",
+            5
+        );
+        var player = new Player();
+        player.MoveTo(testSublocation);
 
         var result = command.TryExecute(new List<string> { "Elias" }, player);
 
@@ -63,7 +71,7 @@ public class TalkToNPCCommandTests
     private class TestNPC : NPC
     {
         public bool WasTalkedTo = false;
-        public TestNPC(string name) => Name = name;
+        public TestNPC(string name) : base(name) { }
         public override void Talk() => WasTalkedTo = true;
     }
 }

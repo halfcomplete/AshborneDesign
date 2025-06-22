@@ -2,7 +2,7 @@
 using AshborneGame._Core.Globals.Interfaces;
 using AshborneGame._Core.Globals.Services;
 
-namespace AshborneGame._Core.Game.CommandHandling.Commands
+namespace AshborneGame._Core.Game.CommandHandling.Commands.InventoryCommands
 {
     public class ShowInventoryCommand : ICommand
     {

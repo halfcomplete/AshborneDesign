@@ -11,7 +11,7 @@ namespace AshborneGame._Core.Data.BOCS.NPCSystem.NPCBehaviours
         public float Health { get; set; }
         public float MaxHealth { get; set; }
 
-        public CanBeAttackedBehaviour(int maxHealth, BOCSGameObject parentObject)
+        public CanBeAttackedBehaviour(BOCSGameObject parentObject, int maxHealth)
         {
             Health = MaxHealth = maxHealth;
             ParentObject = parentObject;

@@ -8,7 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="_Core\Game\CommandHandling\Commands\InventoryCommandBase.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="WebPort\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="_Core\Game\CommandHandling\Commands\BaseCommands\BaseInventoryCommand.cs" />
   </ItemGroup>
 
 </Project>

@@ -25,5 +25,12 @@ namespace AshborneGame._Core.Data.BOCS.NPCSystem
             npc.AddBehaviour(typeof(IHasInventory), new TradeableNPCBehaviour());
             return npc;
         }
+
+        public static NPC CreateDummy(string name, string description, int maxHealth)
+        {
+            var dummy = new NPC(name, description);
+            dummy.AddBehaviour(typeof(ICanBeAttacked), new CanBeAttackedBehaviour(dummy, maxHealth));
+            return dummy;
+        }
     }
 }

@@ -112,7 +112,7 @@ namespace AshborneGame._Core._Player
         /// Moves the player based on parsed input.
         /// </summary>
         /// <param name="parsedInput">The parsed input containing the direction or location to move to.</param>
-        public void MoveTo(List<string> parsedInput)
+        public bool TryMoveTo(List<string> parsedInput)
         {
             if (parsedInput == null || parsedInput.Count == 0)
             {
@@ -138,6 +138,7 @@ namespace AshborneGame._Core._Player
                 // Else the place is a sublocation
                 HandleSublocationMovement(place);
             }
+            return true;
         }
 
         private void HandleDirectionalMovement(string direction)
@@ -217,16 +218,15 @@ namespace AshborneGame._Core._Player
             if (npc.TryGetBehaviour<ICanBeAttacked>(out var attackableBehaviour))
             {
                 float damage = 0;
+                var (baseStrength, bonusStrength, totalStrength) = Stats.GetStat(PlayerStatTypes.Strength);
                 if (EquippedItems.TryGetValue("hand", out var weapon) && weapon != null && weapon.TryGetBehaviour<ICanDamage>(out var damageBehaviour))
                 {
-                    (int baseStrength, int bonusStrength, int totalStrength) = Stats.GetStat(PlayerStatTypes.Strength);
                     damage = (float)(damageBehaviour.BaseDamage + totalStrength * 0.5); // Example damage calculation
                     IOService.Output.WriteLine($"You attack {npc.Name} with {weapon.Name} for {damage} damage.");
                 }
                 else
                 {
                     // If no weapon is equipped, use bare hands
-                    (int baseStrength, int bonusStrength, int totalStrength) = Stats.GetStat(PlayerStatTypes.Strength);
                     damage = totalStrength;
                     IOService.Output.WriteLine($"You attack {npc.Name} with your bare hands for {damage} damage.");
                 }

@@ -8,7 +8,7 @@ using AshborneGame._Core.Scenes;
 
 namespace AshborneGame._Core.Game.CommandHandling.Commands
 {
-    public class CloseCommand : ICommand
+    public class CloseObjectCommand : ICommand
     {
         public string Name => "close";
         public string Description => "Closes an object.";

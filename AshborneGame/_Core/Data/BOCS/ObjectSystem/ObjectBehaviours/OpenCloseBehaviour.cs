@@ -1,4 +1,5 @@
 ﻿using AshborneGame._Core.Data.BOCS.CommonBehaviourModules;
+using AshborneGame._Core.Data.BOCS.NPCSystem.NPCBehaviourModules;
 using AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviourModules;
 using AshborneGame._Core.Game;
 using AshborneGame._Core.Globals.Enums;
@@ -12,10 +13,10 @@ namespace AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviours
 
         public bool IsOpen { get; private set; } = false;
 
-        public OpenCloseBehaviour(BOCSGameObject parentObject, bool initialState)
+        public OpenCloseBehaviour(BOCSGameObject parentObject, bool isOpenInitially)
         {
             ParentObject = parentObject;
-            IsOpen = initialState;
+            IsOpen = isOpenInitially;
         }
 
         public void Interact(ObjectInteractionTypes _interaction)
@@ -51,7 +52,8 @@ namespace AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviours
             }
 
             IsOpen = true;
-            if (behaviours.FirstOrDefault(s => s.GetType() == typeof(ContainerBehaviour)) is ContainerBehaviour containerBehaviour)
+            IOService.Output.DisplayDebugMessage($"Behaviours available for {ParentObject.Name}: {string.Join(", ", behaviours.Select(b => b.GetType().Name))}", ConsoleMessageTypes.INFO);
+            if (ParentObject.GetAllBehaviours<IHasInventory>().FirstOrDefault(s => s.GetType() == typeof(ContainerBehaviour)) is ContainerBehaviour containerBehaviour)
             {
                 GameEngine.Player.OpenedInventory = containerBehaviour.Inventory;
                 IOService.Output.WriteLine($"You open the {ParentObject.Name}.");

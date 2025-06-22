@@ -1,12 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Globals.Enums;
+using AshborneGame._Core.Globals.Interfaces;
+using AshborneGame._Core.Globals.Services;
 
 namespace AshborneGame._Core.Game.CommandHandling.Commands
 {
-    public class GoCommand
+    internal class GoCommand : ICommand
     {
+        public string Name => "go";
+        public string Description => "Takes the player to a new location based on direction.";
+
+        public bool TryExecute(List<string> args, Player player)
+        {
+            if (args.Count == 0)
+            {
+                IOService.Output.WriteLine("Go where? Specify a direction or location.");
+                return false;
+            }
+
+            IOService.Output.DisplayDebugMessage($"Parsed Input for 'go': {string.Join(" ", args)}", ConsoleMessageTypes.INFO); // Debugging output
+
+            if (args[0].Equals("back"))
+            {
+                player.MoveTo(player.CurrentLocation);
+            }
+            else
+            {
+                return player.TryMoveTo(args);
+            }
+            return true;
+        }
     }
 }

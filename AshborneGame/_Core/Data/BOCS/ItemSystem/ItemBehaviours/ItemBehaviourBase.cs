@@ -1,8 +1,7 @@
-﻿
-namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours
+﻿namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours
 {
-    public abstract class ItemBehaviourBase
+    public abstract class ItemBehaviourBase<T>
     {
-        public abstract object DeepClone();
+        public abstract T DeepClone();
     }
 }

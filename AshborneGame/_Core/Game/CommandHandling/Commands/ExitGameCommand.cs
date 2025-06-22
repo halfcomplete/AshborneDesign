@@ -1,12 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Globals.Interfaces;
+using AshborneGame._Core.Globals.Services;
 
 namespace AshborneGame._Core.Game.CommandHandling.Commands
 {
-    public class ExitGameCommand
+    internal class ExitGameCommand : ICommand
     {
+        public string Name => "exit";
+        public string Description => "Exits the game.";
+
+        public bool TryExecute(List<string> args, Player player)
+        {
+            if (args.Count > 0)
+            {
+                IOService.Output.WriteLine("Did you mean \"exit\"?");
+                return false;
+            }
+
+            IOService.Output.WriteLine("Thank you for playing Ashborne!");
+            Thread.Sleep(1000);
+            Environment.Exit(0);
+
+            return true;
+        }
     }
 }

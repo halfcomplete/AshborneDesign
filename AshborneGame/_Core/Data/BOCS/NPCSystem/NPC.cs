@@ -25,6 +25,22 @@ namespace AshborneGame._Core.Data.BOCS.NPCSystem
         /// </summary>
         public string SelfDescription { get; }
 
+        public NPC(string name)
+        {
+            Name = name ?? throw new ArgumentNullException(nameof(name), "Name cannot be null.");
+            Description = "An NPC."; // Default description
+            Greeting = "Hello!"; // Default greeting
+            SelfDescription = "I am an NPC."; // Default self-description
+        }
+
+        public NPC(string name, string description)
+        {
+            Name = name ?? throw new ArgumentNullException(nameof(name), "Name cannot be null.");
+            Description = description ?? throw new ArgumentNullException(nameof(description), "Description cannot be null.");
+            Greeting = "Hello!"; // Default greeting
+            SelfDescription = "I am an NPC."; // Default self-description
+        }
+
         public NPC(string name, string description, string greeting, string selfDescription)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name), "Name cannot be null.");
@@ -33,7 +49,7 @@ namespace AshborneGame._Core.Data.BOCS.NPCSystem
             SelfDescription = selfDescription ?? throw new ArgumentNullException(nameof(selfDescription), "SelfDescription cannot be null.");
         }
 
-        public void Talk()
+        public virtual void Talk()
         {
             IOService.Output.WriteLine($"{Name}: {Greeting} {SelfDescription}.");
             GameEngine.Player.CurrentNPCInteraction = this;

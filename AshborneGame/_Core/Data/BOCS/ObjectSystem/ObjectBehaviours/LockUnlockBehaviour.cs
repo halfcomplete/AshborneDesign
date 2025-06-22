@@ -1,10 +1,11 @@
 ﻿using AshborneGame._Core.Data.BOCS.CommonBehaviourModules;
+using AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviourModules;
 using AshborneGame._Core.Globals.Enums;
 using AshborneGame._Core.Globals.Services;
 
 namespace AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviours
 {
-    public class LockUnlockBehaviour : IAwareOfParentObject
+    public class LockUnlockBehaviour : IInteractable, IAwareOfParentObject
     {
         public BOCSGameObject ParentObject { get; set; } = null!;
         public bool IsLocked { get; private set; } = false;
