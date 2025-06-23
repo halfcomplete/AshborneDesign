@@ -133,6 +133,10 @@ namespace AshborneGame._Core._Player
                 // If the place is the name of an exit then move to that exit
                 MoveTo(CurrentLocation.Exits.Values.First(s => s.Name.Equals(place, StringComparison.OrdinalIgnoreCase)));
             }
+            else if (parsedInput[0].Equals("back", StringComparison.OrdinalIgnoreCase))
+            {
+                MoveTo(CurrentLocation);
+            }
             else
             {
                 // Else the place is a sublocation

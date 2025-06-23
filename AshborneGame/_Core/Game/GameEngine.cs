@@ -110,8 +110,6 @@ namespace AshborneGame._Core.Game
 
             while (_isRunning)
             {
-                DisplaySceneIntro();
-
                 string input = IOService.Input.GetPlayerInput().Trim().ToLowerInvariant();
 
                 if (string.IsNullOrWhiteSpace(input))

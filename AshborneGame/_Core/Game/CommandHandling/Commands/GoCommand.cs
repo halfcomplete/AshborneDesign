@@ -22,13 +22,12 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands
 
             if (args[0].Equals("back"))
             {
-                player.MoveTo(player.CurrentLocation);
+                return player.TryMoveTo(args);
             }
             else
             {
                 return player.TryMoveTo(args);
             }
-            return true;
         }
     }
 }

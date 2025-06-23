@@ -10,6 +10,7 @@ using Xunit;
 using FluentAssertions;
 using AshborneGame._Core.Data.BOCS.ObjectSystem;
 using AshborneGame._Core.Globals.Interfaces;
+using AshborneTests;
 
 public class TalkToNPCCommandTests
 {
@@ -20,7 +21,7 @@ public class TalkToNPCCommandTests
 
         // Arrange
         var command = new TalkToNPCCommand();
-        var player = new Player();
+        var player = TestUtils.CreateTestPlayer();
 
         // Act
         var result = command.TryExecute(new List<string> { "Elias" }, player);
@@ -33,14 +34,8 @@ public class TalkToNPCCommandTests
     public void TalkToNPC_Fails_When_ObjectIsNotNPC()
     {
         var command = new TalkToNPCCommand();
-        var player = new Player();
-        Sublocation testSublocation = new Sublocation(
-            new Location("Test Location", "A place for testing."),
-            new GameObject("Test object"),
-            "Test Sublocation",
-            "A sublocation for testing.",
-            5
-        );
+        var player = TestUtils.CreateTestPlayer();
+        var testSublocation = TestUtils.CreateTestSublocation();
 
         var result = command.TryExecute(new List<string> { "Elias" }, player);
 
