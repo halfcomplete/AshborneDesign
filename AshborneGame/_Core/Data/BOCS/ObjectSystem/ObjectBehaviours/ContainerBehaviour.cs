@@ -9,14 +9,6 @@ namespace AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviours
 {
     public class ContainerBehaviour : IHasInventory
     {
-        public bool IsOpen { get; private set; }
-        public bool IsLocked { get; private set; }
         public Inventory Inventory { get; private set; } = new Inventory();
-
-        public ContainerBehaviour(bool isOpen, bool isLocked)
-        {
-            IsOpen = isOpen;
-            IsLocked = isLocked;
-        }
     }
 }

@@ -12,7 +12,7 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands
 
         public bool TryExecute(List<string> args, Player player)
         {
-            IOService.Output.WriteLine(player.CurrentSublocation?.GetFullDescription() ?? player.CurrentLocation.GetFullDescription());
+            IOService.Output.WriteLine(player.CurrentSublocation?.GetFullDescription(player) ?? player.CurrentLocation.GetFullDescription(player));
             return true;
         }
     }

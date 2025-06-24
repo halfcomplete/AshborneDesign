@@ -1,4 +1,5 @@
-﻿using AshborneGame._Core.Data.BOCS.CommonBehaviourModules;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Data.BOCS.CommonBehaviourModules;
 using AshborneGame._Core.Data.BOCS.NPCSystem.NPCBehaviourModules;
 using AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviourModules;
 using AshborneGame._Core.Game;
@@ -19,15 +20,15 @@ namespace AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviours
             IsOpen = isOpenInitially;
         }
 
-        public void Interact(ObjectInteractionTypes _interaction)
+        public void Interact(ObjectInteractionTypes _interaction, Player player)
         {
             switch (_interaction)
             {
                 case ObjectInteractionTypes.Open:
-                    Open();
+                    Open(player);
                     break;
                 case ObjectInteractionTypes.Close:
-                    Close();
+                    Close(player);
                     break;
                 default:
                     IOService.Output.WriteLine("Invalid interaction type for OpenCloseBehaviour.");
@@ -35,7 +36,7 @@ namespace AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviours
             }
         }
 
-        private void Open()
+        private void Open(Player player)
         {
             var behaviours = ParentObject.GetAllBehaviours<IInteractable>();
 
@@ -55,9 +56,9 @@ namespace AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviours
             IOService.Output.DisplayDebugMessage($"Behaviours available for {ParentObject.Name}: {string.Join(", ", behaviours.Select(b => b.GetType().Name))}", ConsoleMessageTypes.INFO);
             if (ParentObject.GetAllBehaviours<IHasInventory>().FirstOrDefault(s => s.GetType() == typeof(ContainerBehaviour)) is ContainerBehaviour containerBehaviour)
             {
-                GameEngine.Player.OpenedInventory = containerBehaviour.Inventory;
+                player.OpenedInventory = containerBehaviour.Inventory;
                 IOService.Output.WriteLine($"You open the {ParentObject.Name}.");
-                (bool isEmpty, string contents) = containerBehaviour.Inventory.GetInventoryContents();
+                (bool isEmpty, string contents) = containerBehaviour.Inventory.GetInventoryContents(player: null);
                 if (!isEmpty)
                 {
                     IOService.Output.WriteLine($"Inside the {ParentObject.Name} you see:");
@@ -70,7 +71,7 @@ namespace AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviours
             }
         }
 
-        private void Close()
+        private void Close(Player player)
         {
             if (!IsOpen)
             {
@@ -79,7 +80,7 @@ namespace AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviours
             }
             
             IsOpen = false;
-            GameEngine.Player.OpenedInventory = null;
+            player.OpenedInventory = null;
             IOService.Output.WriteLine($"You close the {ParentObject.Name}.");
         }
     }

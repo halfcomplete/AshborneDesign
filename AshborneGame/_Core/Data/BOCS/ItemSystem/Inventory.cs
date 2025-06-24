@@ -1,4 +1,5 @@
-﻿using AshborneGame._Core.Data.BOCS.CommonBehaviourModules;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Data.BOCS.CommonBehaviourModules;
 using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
 using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours;
 using AshborneGame._Core.Game;
@@ -104,16 +105,20 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem
             {
                 if (removed >= count) break;
 
-                int needed = count - removed;
-                int taken = slot.Remove(needed);
-                removed += taken;
+                int needed = count - removed; // Tracks how many items left need to be removed
+                int prevQuantity = slot.Quantity; // Tracks how many items were originally in this current inventory slot
+                int left = slot.Remove(needed); // The number of items left
+                removed += prevQuantity - left; // Tracks how many items have been removed
 
                 if (slot.IsEmpty)
-                    _slots.Remove(slot);
+                    _slots.Remove(slot); // Delete the inventory slot if it is empty
             }
 
             if (removed < count)
-                throw new InvalidOperationException($"Tried to remove {count}, but only removed {removed}.");
+            {
+                // If we didn't find enough items to remove but still removed as many as possible
+                IOService.Output.DisplayDebugMessage($"Not enough items to remove {count} of them!");
+            }
         }
 
         /// <summary>
@@ -129,7 +134,7 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem
         /// <summary>
         /// Returns a textual summary of the inventory.
         /// </summary>
-        public (bool, string) GetInventoryContents()
+        public (bool, string) GetInventoryContents(Player? player)
         {
             if (_slots.Count == 0)
                 return (true, "");
@@ -138,11 +143,14 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem
             foreach (var slot in _slots)
             {
                 var equipped = string.Empty;
-                if (slot.Item.TryGetBehaviour<IEquippable>(out var equippableBehaviour) && equippableBehaviour.EquipInfo.IsEquippable)
+                if (player != null)
                 {
-                    // If the item is equippable, check if it's equipped
-                    var isEquipped = GameEngine.Player.EquippedItems.TryGetValue(slot.Item.Name.ToLower(), out var equippedItem) && equippedItem != null;
-                    equipped = isEquipped ? " (Equipped)" : "";
+                    if (slot.Item.TryGetBehaviour<IEquippable>(out var equippableBehaviour) && equippableBehaviour.EquipInfo.IsEquippable)
+                    {
+                        // If the item is equippable, check if it's equipped
+                        var isEquipped = player.EquippedItems.TryGetValue(slot.Item.Name.ToLower(), out var equippedItem) && equippedItem != null;
+                        equipped = isEquipped ? " (Equipped)" : "";
+                    }
                 }
                 
                 sb.AppendLine($"{slot.Quantity} x {slot.Item.Name} - {slot.Item.Description}{equipped}");
@@ -151,9 +159,9 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem
             return (false, sb.ToString());
         }
 
-        public void PrintInventoryContents()
+        public void PrintInventoryContents(Player player)
         {
-            var (isEmpty, contents) = GetInventoryContents();
+            var (isEmpty, contents) = GetInventoryContents(player);
             if (isEmpty)
             {
                 IOService.Output.WriteLine("Your inventory is empty.");

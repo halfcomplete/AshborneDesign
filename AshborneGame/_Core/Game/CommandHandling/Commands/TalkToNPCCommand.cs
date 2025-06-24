@@ -35,7 +35,7 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands
             Sublocation sublocation = player.CurrentSublocation!;
             NPC npc = (NPC)sublocation.Object;
 
-            npc.Talk();
+            npc.Talk(player);
             return true;
         }
     }

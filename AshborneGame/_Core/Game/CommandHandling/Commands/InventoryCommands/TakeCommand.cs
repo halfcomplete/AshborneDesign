@@ -20,26 +20,53 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands.InventoryCommands
                 return false;
             }
 
-            int quantity = ParseQuantity(ref args);
-            if (quantity == 0)
-            {
-                IOService.Output.WriteLine("Invalid amount.");
-                return false;
-            }
-
-            string itemName = string.Join(" ", args).Trim();
+            
             Inventory? originInventory = ResolveSourceInventory(player);
             Inventory destinationInventory = player.Inventory;
-
-            if (quantity < 0 && string.IsNullOrEmpty(itemName))
-            {
-                return TakeAllItems(originInventory, destinationInventory);
-            }
 
             if (originInventory == null)
             {
                 IOService.Output.WriteLine("There is no open container or NPC inventory to take items from.");
                 return false;
+            }
+
+            int quantity = ParseQuantity(ref args);
+            string itemName = string.Join(" ", args).Trim();
+
+            if (quantity == 0)
+            {
+                if (originInventory.GetItem(itemName) != null)
+                {
+                    quantity = 1;
+                }
+                else
+                {
+                    IOService.Output.WriteLine("Invalid amount.");
+                    return false;
+                }
+                
+            }
+
+            if (quantity < 0)
+            {
+                if (string.IsNullOrEmpty(itemName))
+                {
+                    TakeAllItems(player, originInventory, destinationInventory);
+                }
+                else
+                {
+                    
+                    Item? targetItem = originInventory.GetItem(itemName);
+                    if (targetItem == null)
+                    {
+                        IOService.Output.WriteLine($"You cannot take {itemName} because it is not there.");
+                        return false;
+                    }
+
+                    TakeAllOfAnItem(originInventory, destinationInventory, targetItem);
+                }
+
+                return true;
             }
 
             if (string.IsNullOrEmpty(itemName))
@@ -51,7 +78,7 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands.InventoryCommands
             Item? item = originInventory.GetItem(itemName);
             if (item == null)
             {
-                IOService.Output.WriteLine($"You cannot take {itemName} because it is not present.");
+                IOService.Output.WriteLine($"You cannot take {itemName} because it is not there.");
                 return false;
             }
 
@@ -73,8 +100,8 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands.InventoryCommands
             originInventory.TransferItem(originInventory, destinationInventory, item, quantity);
             IOService.Output.WriteLine($"Successfully took {quantity} x {item.Name}.");
 
-            ShowInventorySummary(player.Inventory, "Your inventory now contains:");
-            ShowInventorySummary(originInventory, "The container / NPC now has:");
+            ShowInventorySummary(player, player.Inventory, "Your inventory now contains:");
+            ShowInventorySummary(player, originInventory, "The container / NPC now has:");
 
             return true;
         }
@@ -93,21 +120,19 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands.InventoryCommands
             return null;
         }
 
-        private bool TakeAllItems(Inventory? origin, Inventory destination)
+        private void TakeAllItems(Player player, Inventory origin, Inventory destination)
         {
-            if (origin == null)
-            {
-                IOService.Output.WriteLine("There is no open container or NPC to take items from.");
-                return false;
-            }
-
             origin.TransferAllItems(origin, destination);
             IOService.Output.WriteLine("You took all available items.");
 
-            ShowInventorySummary(destination, "Your inventory now contains:");
-            ShowInventorySummary(origin, "The container / NPC now has:");
+            ShowInventorySummary(player, destination, "Your inventory now contains:");
+            ShowInventorySummary(player, origin, "The container / NPC now has:");
+        }
 
-            return true;
+        private void TakeAllOfAnItem(Inventory origin, Inventory destination, Item item)
+        {
+            int count = origin.Slots.Where(s => s.Item.Name == item.Name).Sum(s => s.Quantity);
+            origin.TransferItem(origin, destination, item, count);
         }
     }
 }

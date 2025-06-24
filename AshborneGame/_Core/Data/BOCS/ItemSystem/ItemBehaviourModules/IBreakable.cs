@@ -1,4 +1,5 @@
-﻿using AshborneGame._Core.Globals.Services;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Globals.Services;
 
 namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules
 {
@@ -8,7 +9,7 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules
         int MaxDurability { get; set; }
         bool IsBroken => Durability <= 0;
 
-        void Damage(int amount)
+        void Damage(Player player, int amount)
         {
             if (amount < 0)
             {
@@ -19,11 +20,11 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules
             if (Durability <= 0)
             {
                 Durability = 0;
-                OnBreak();
+                OnBreak(player);
             }
         }
 
-        void Repair(int amount)
+        void Repair(Player player, int amount)
         {
             if (amount < 0)
             {
@@ -36,6 +37,6 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules
             }
         }
 
-        void OnBreak();
+        void OnBreak(Player player);
     }
 }

@@ -1,7 +1,8 @@
-﻿using AshborneGame._Core.Game;
+﻿using AshborneGame._Core._Player;
 using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
-using AshborneGame._Core.Globals.Services;
+using AshborneGame._Core.Game;
 using AshborneGame._Core.Globals.Enums;
+using AshborneGame._Core.Globals.Services;
 
 namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.PlayerRelatedBehaviours
 {
@@ -14,11 +15,11 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.PlayerRelatedBe
             DamageAmount = damageAmount;
             ConsumeOnUse = consumeOnUse;
         }
-        public void OnUse()
+        public void OnUse(Player player)
         {
             // Logic to apply damage to the player
-            GameEngine.Player.ChangeHealth(-DamageAmount);
-            IOService.Output.WriteLine($"You take {DamageAmount} damage. You now have {GameEngine.Player.Stats.GetStat(PlayerStatTypes.Health)} HP.");
+            player.ChangeHealth(-DamageAmount);
+            IOService.Output.WriteLine($"You take {DamageAmount} damage. You now have {player.Stats.GetStat(PlayerStatTypes.Health)} HP.");
         }
 
         public override OnUseDamagePlayerBehaviour DeepClone()

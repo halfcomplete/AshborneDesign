@@ -4,69 +4,58 @@ using AshborneGame._Core.Game.CommandHandling.Commands;
 using AshborneGame._Core.Globals.Services;
 using AshborneGame._Core.Scenes;
 using Moq;
-using System.Numerics;
-using System.Xml.Linq;
-using Xunit;
 using FluentAssertions;
-using AshborneGame._Core.Data.BOCS.ObjectSystem;
 using AshborneGame._Core.Globals.Interfaces;
 using AshborneTests;
 
-public class TalkToNPCCommandTests
+namespace AshborneTests.CommandTests
 {
-    [Fact]
-    public void TalkToNPC_Fails_When_NoSublocation()
+    [Collection("AshborneTests")]
+    public class TalkToNPCCommandTests
     {
-        IOService.Initialise(new Mock<IInputHandler>().Object, new Mock<IOutputHandler>().Object);
+        [Fact]
+        public void TalkToNPC_Fails_When_NoSublocation()
+        {
+            var command = new TalkToNPCCommand();
+            var player = TestUtils.CreateTestPlayer();
 
-        // Arrange
-        var command = new TalkToNPCCommand();
-        var player = TestUtils.CreateTestPlayer();
+            var result = command.TryExecute(new List<string> { "Elias" }, player);
 
-        // Act
-        var result = command.TryExecute(new List<string> { "Elias" }, player);
+            result.Should().BeFalse();
+        }
 
-        // Assert
-        result.Should().BeFalse();
-    }
+        [Fact]
+        public void TalkToNPC_Fails_When_Object_Is_Not_NPC()
+        {
+            var command = new TalkToNPCCommand();
+            var player = TestUtils.CreateTestPlayer();
+            var testSublocation = TestUtils.CreateTestSublocation(TestUtils.CreateTestGameObject());
 
-    [Fact]
-    public void TalkToNPC_Fails_When_ObjectIsNotNPC()
-    {
-        var command = new TalkToNPCCommand();
-        var player = TestUtils.CreateTestPlayer();
-        var testSublocation = TestUtils.CreateTestSublocation();
+            var result = command.TryExecute(new List<string> { "Elias" }, player);
 
-        var result = command.TryExecute(new List<string> { "Elias" }, player);
+            result.Should().BeFalse();
+        }
 
-        result.Should().BeFalse();
-    }
+        [Fact]
+        public void TalkToNPC_Succeeds_In_Good_Conditions()
+        {
+            var npc = new TestNPC("Elias");
+            var command = new TalkToNPCCommand();
+            Sublocation testSublocation = TestUtils.CreateTestSublocation(npc);
+            var player = TestUtils.CreateTestPlayer();
+            player.MoveTo(testSublocation);
 
-    [Fact]
-    public void TalkToNPC_Succeeds_When_NPC_Present()
-    {
-        var npc = new TestNPC("Elias");
-        var command = new TalkToNPCCommand();
-        Sublocation testSublocation = new Sublocation(
-            new Location("Test Location", "A place for testing."),
-            npc,
-            "Test Sublocation",
-            "A sublocation for testing.",
-            5
-        );
-        var player = new Player();
-        player.MoveTo(testSublocation);
+            var result = command.TryExecute(new List<string> { "Elias" }, player);
 
-        var result = command.TryExecute(new List<string> { "Elias" }, player);
+            result.Should().BeTrue();
+            npc.WasTalkedTo.Should().BeTrue();
+        }
 
-        result.Should().BeTrue();
-        npc.WasTalkedTo.Should().BeTrue();
-    }
-
-    private class TestNPC : NPC
-    {
-        public bool WasTalkedTo = false;
-        public TestNPC(string name) : base(name) { }
-        public override void Talk() => WasTalkedTo = true;
+        private class TestNPC : NPC
+        {
+            internal bool WasTalkedTo = false;
+            internal TestNPC(string name) : base(name) { }
+            public override void Talk(Player player) => WasTalkedTo = true;
+        }
     }
 }

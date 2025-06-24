@@ -6,10 +6,11 @@ using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.PlayerRelatedBehavi
 using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.UtilityBehaviours;
 using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.OtherBehaviours;
 using AshborneGame._Core.Globals.Enums;
+using System.Diagnostics;
 
 namespace AshborneGame._Core.Data.BOCS.ItemSystem
 {
-    internal static class ItemFactory
+    public static class ItemFactory
     {
         private static Item AddBaseBehaviours(Item item)
         {

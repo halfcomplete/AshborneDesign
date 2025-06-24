@@ -1,4 +1,5 @@
-﻿using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
 using AshborneGame._Core.Globals.Services;
 
 namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.CombatBehaviours
@@ -15,7 +16,7 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.CombatBehaviour
             BaseDamage = damageAmount;
             ConsumeOnUse = consumeOnUse;
         }
-        public void OnUse()
+        public void OnUse(Player player)
         {
             // Implementation for dealing damage to the target
             // For now just print a message

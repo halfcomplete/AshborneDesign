@@ -32,8 +32,8 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands
             }
 
             var allBehaviours = sublocation.Object.GetAllBehaviours<IInteractable>();
-            IOService.Output.WriteLine($"You are trying to open {objectName}.");
-            IOService.Output.WriteLine($"The object has the following behaviours: {string.Join(", ", allBehaviours.Select(b => b.GetType().Name))}.");
+            IOService.Output.DisplayDebugMessage($"You are trying to open {objectName}.");
+            IOService.Output.DisplayDebugMessage($"The object has the following behaviours: {string.Join(", ", allBehaviours.Select(b => b.GetType().Name))}.");
             if (!allBehaviours.ToList().Any(b => b.GetType() == typeof(OpenCloseBehaviour)))
             {
                 IOService.Output.WriteLine($"You can't open that.");
@@ -49,13 +49,13 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands
                     return false;
                 }
                 var openCloseBehaviour = allBehaviours.FirstOrDefault(b => b is OpenCloseBehaviour) as OpenCloseBehaviour;
-                openCloseBehaviour!.Interact(ObjectInteractionTypes.Open);
+                openCloseBehaviour!.Interact(ObjectInteractionTypes.Open, player);
                 return true;
             }
             else
             {
                 var openCloseBehaviour = allBehaviours.FirstOrDefault(b => b is OpenCloseBehaviour) as OpenCloseBehaviour;
-                openCloseBehaviour!.Interact(ObjectInteractionTypes.Open);
+                openCloseBehaviour!.Interact(ObjectInteractionTypes.Open, player);
                 return true;
             }
         }

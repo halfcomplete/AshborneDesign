@@ -1,4 +1,5 @@
-﻿using AshborneGame._Core.Data.BOCS.CommonBehaviourModules;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Data.BOCS.CommonBehaviourModules;
 using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
 using AshborneGame._Core.Globals.Enums;
 using AshborneGame._Core.Globals.Services;
@@ -20,13 +21,13 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.NotifierBehavio
             ParentObject = parentObject ?? throw new ArgumentNullException(nameof(parentObject), "Parent object cannot be null.");
         }
 
-        public void Use(string? target = null)
+        public void Use(Player player, string? target = null)
         {
             // Iterate through all behaviours that implement IActOnUse and call their Use method
             foreach (var behaviour in ParentObject.GetAllBehaviours<IActOnUse>())
             {
                 IOService.Output.DisplayDebugMessage($"Using behaviour {behaviour.GetType().Name} on item {ParentObject.Name}.", ConsoleMessageTypes.INFO);
-                behaviour.OnUse();
+                behaviour.OnUse(player);
             }
         }
 

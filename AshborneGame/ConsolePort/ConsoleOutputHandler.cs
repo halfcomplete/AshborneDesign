@@ -33,7 +33,11 @@ namespace AshborneGame.ConsolePort
                     break;
             }
 
+#if DEBUG
             Console.WriteLine($"[{type}]: {message}");
+#endif
+
+
             Console.ResetColor();
         }
     }

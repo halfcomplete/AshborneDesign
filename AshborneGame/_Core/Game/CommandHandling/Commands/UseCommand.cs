@@ -39,7 +39,7 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands
             IOService.Output.DisplayDebugMessage($"Using item: {item.Name}", ConsoleMessageTypes.INFO); // Debugging output
 
             IUsable usableItem = (IUsable)item.Behaviours[typeof(IUsable)][0];
-            usableItem.Use();
+            usableItem.Use(player);
 
             IOService.Output.WriteLine($"You used {item.Name}.");
 

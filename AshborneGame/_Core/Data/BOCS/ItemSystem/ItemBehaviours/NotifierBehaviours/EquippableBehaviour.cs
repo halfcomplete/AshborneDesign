@@ -1,7 +1,8 @@
-﻿using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
 using AshborneGame._Core.Game;
-using AshborneGame._Core.Globals.Services;
 using AshborneGame._Core.Globals.Enums;
+using AshborneGame._Core.Globals.Services;
 
 namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.NotifierBehaviours
 {
@@ -18,14 +19,14 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.NotifierBehavio
             EquipInfo = (isEquippable, bodyParts);
         }
 
-        public void Equip(Item item, string bodyPart)
+        public void Equip(Player player, Item item, string bodyPart)
         {
-            if (string.IsNullOrWhiteSpace(bodyPart) || !GameEngine.Player.EquippedItems.ContainsKey(bodyPart.ToLower()) || !EquipInfo.BodyParts.Contains(bodyPart))
+            if (string.IsNullOrWhiteSpace(bodyPart) || !player.EquippedItems.ContainsKey(bodyPart.ToLower()) || !EquipInfo.BodyParts.Contains(bodyPart))
             {
                 throw new ArgumentException($"Invalid equipment slot: {bodyPart}", nameof(bodyPart));
             }
 
-            GameEngine.Player.EquipItem(item, bodyPart);
+            player.EquipItem(item, bodyPart);
             IOService.Output.DisplayDebugMessage($"Equipped {item.Name} in the {bodyPart} slot.", ConsoleMessageTypes.INFO);
             IOService.Output.WriteLine($"You equip {item.Name} on your {bodyPart}.");
             IOService.Output.DisplayDebugMessage($"Item Behaviour Values: {item.Behaviours.Values.SelectMany(x => x).OfType<IActOnEquip>().Count()}", ConsoleMessageTypes.INFO);
@@ -35,26 +36,26 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.NotifierBehavio
             }
             foreach (var behaviour in item.Behaviours.Values.SelectMany(x => x).OfType<IActOnEquip>())
             {
-                behaviour.OnEquip();
+                behaviour.OnEquip(player);
             }
         }
 
-        public void Unequip(Item item, string bodyPart)
+        public void Unequip(Player player, Item item, string bodyPart)
         {
-            if (string.IsNullOrWhiteSpace(bodyPart) || !GameEngine.Player.EquippedItems.ContainsKey(bodyPart.ToLower()))
+            if (string.IsNullOrWhiteSpace(bodyPart) || !player.EquippedItems.ContainsKey(bodyPart.ToLower()))
             {
                 throw new ArgumentException($"Invalid equipment slot: {bodyPart}", nameof(bodyPart));
             }
 
-            if (GameEngine.Player.EquippedItems[bodyPart] == null)
+            if (player.EquippedItems[bodyPart] == null)
             {
                 throw new InvalidOperationException($"No item is currently equipped in the {bodyPart} slot.");
             }
-            GameEngine.Player.UnequipItem(item, bodyPart);
+            player.UnequipItem(item, bodyPart);
 
             foreach (var behaviour in item.Behaviours.Values.SelectMany(x => x).OfType<IActOnEquip>())
             {
-                behaviour.OnUnequip();
+                behaviour.OnUnequip(player);
             }
         }
 

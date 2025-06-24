@@ -1,9 +1,11 @@
 ﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Data.BOCS;
 using AshborneGame._Core.Data.BOCS.ItemSystem;
 using AshborneGame._Core.Data.BOCS.NPCSystem;
 using AshborneGame._Core.Data.BOCS.NPCSystem.NPCBehaviourModules;
 using AshborneGame._Core.Data.BOCS.NPCSystem.NPCBehaviours;
 using AshborneGame._Core.Data.BOCS.ObjectSystem;
+using AshborneGame._Core.Globals.Enums;
 using AshborneGame._Core.Scenes;
 using System;
 using System.Collections.Generic;
@@ -39,18 +41,13 @@ namespace AshborneTests
         /// <summary>
         /// Creates a test NPC with a default name "TestNPCWithInventory" and adds a TradeableNPCBehaviour to it. Optionally adds items to the NPC's inventory.
         /// </summary>
-        static internal NPC CreateTestNPCWithInventory(string name = "TestNPCWithInventory", List<Item>? items = null)
+        static internal NPC CreateTestNPCWithInventory(int itemNumber = 0)
         {
-            var npc = new NPC(name);
+            var npc = CreateTestNPC();
             npc.AddBehaviour(typeof(IHasInventory), new TradeableNPCBehaviour());
-            if (items != null)
-            {
-                npc.TryGetBehaviour(out TradeableNPCBehaviour inv);
-                foreach (var item in items)
-                {
-                    inv.Inventory.AddItem(item);
-                }
-            }
+            npc.TryGetBehaviour<IHasInventory>(out var inv);
+            if (itemNumber > 0)
+                inv.Inventory.AddItem(CreateTestItem(), itemNumber);
             return npc;
         }
 
@@ -59,19 +56,19 @@ namespace AshborneTests
         /// </summary>
         static internal Location CreateTestLocation(string name = "Test Location")
         {
-            return new Location(name, "A place for testing.", 1);
+            return new Location(name, "A place for testing", 1);
         }
 
         /// <summary>
         /// Returns a test sublocation with a default name "Test Sublocation" and a default location "Test Location". Has a default game object "Test Object".
         /// </summary>
-        static internal Sublocation CreateTestSublocation(string name = "Test Sublocation")
+        static internal Sublocation CreateTestSublocation(BOCSGameObject gameObject)
         {
             Sublocation sublocation = new Sublocation(
-                CreateTestLocation(),
-                CreateTestGameObject(),
-                name,
-                "A sublocation for testing.",
+                CreateTestLocation(Guid.NewGuid().ToString()),
+                gameObject,
+                "Test sublocation",
+                "A sublocation for testing",
                 5
             );
             return sublocation;
@@ -80,6 +77,20 @@ namespace AshborneTests
         static internal GameObject CreateTestGameObject(string name = "Test Object")
         {
             return new GameObject(name, "A test object.");
+        }
+
+        static internal GameObject CreateTestGameObjectChest(bool hasItem = false, int amount = 1)
+        {
+            GameObject chest = GameObjectFactory.CreateChest("Test chest", "A test chest");
+            chest.TryGetBehaviour<IHasInventory>(out IHasInventory inventory);
+            if (hasItem)
+                inventory.Inventory.AddItem(CreateTestItem(), amount);
+            return chest;
+        }
+
+        static internal Item CreateTestItem(string name = "test_item", int stackLimit = 1, ItemTypes itemType = ItemTypes.None)
+        {
+            return new Item(name, "A test item", "A test item has been used", stackLimit, itemType, ItemQualities.None);
         }
     }
 }

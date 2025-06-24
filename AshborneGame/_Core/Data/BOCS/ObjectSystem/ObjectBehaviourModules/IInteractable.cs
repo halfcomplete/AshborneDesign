@@ -1,4 +1,5 @@
-﻿using AshborneGame._Core.Globals.Enums;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Globals.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviourModules
 {
     public interface IInteractable
     {
-        void Interact(ObjectInteractionTypes _interaction);
+        void Interact(ObjectInteractionTypes _interaction, Player player);
     }
 }

@@ -1,5 +1,6 @@
-﻿using AshborneGame._Core.Game;
+﻿using AshborneGame._Core._Player;
 using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
+using AshborneGame._Core.Game;
 using AshborneGame._Core.Globals.Enums;
 using AshborneGame._Core.Globals.Services;
 
@@ -17,15 +18,15 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.PlayerRelatedBe
             ChangeAmount = changeAmount;
         }
 
-        public void OnEquip()
+        public void OnEquip(Player player)
         {
-            GameEngine.Player.Stats.AddBonus(StatType, ChangeAmount);
+            player.Stats.AddBonus(StatType, ChangeAmount);
             IOService.Output.WriteLine($"Your {StatType} has been increased by {ChangeAmount} while this item is equipped.");
         }
 
-        public void OnUnequip()
+        public void OnUnequip(Player player)
         {
-            GameEngine.Player.Stats.RemoveBonus(StatType, ChangeAmount);
+            player.Stats.RemoveBonus(StatType, ChangeAmount);
             IOService.Output.WriteLine($"Your {StatType} has been decreased by {ChangeAmount} after unequipping this item.");
         }
 

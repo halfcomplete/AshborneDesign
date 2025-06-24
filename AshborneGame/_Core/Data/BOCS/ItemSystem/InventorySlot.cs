@@ -28,7 +28,7 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem
         }
 
         /// <summary>
-        /// Returns the number of items that could not be removed due to insufficient quantity but also removes as many as possible.
+        /// Returns the number of items that are left in the inventory slot but also removes as many as possible.
         /// </summary>
         /// <param name="amount"></param>
         /// <returns></returns>

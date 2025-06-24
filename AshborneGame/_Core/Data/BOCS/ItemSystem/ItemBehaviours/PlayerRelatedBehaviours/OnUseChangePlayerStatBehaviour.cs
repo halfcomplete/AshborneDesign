@@ -1,5 +1,6 @@
-﻿using AshborneGame._Core.Game;
+﻿using AshborneGame._Core._Player;
 using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
+using AshborneGame._Core.Game;
 using AshborneGame._Core.Globals.Enums;
 using AshborneGame._Core.Globals.Services;
 
@@ -25,14 +26,14 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.PlayerRelatedBe
             StatType = statType;
         }
 
-        public void OnUse()
+        public void OnUse(Player player)
         {
             IOService.Output.WriteLine($"You use the item to change your {StatType} by {ChangeAmount}.");
 
             switch (StatType)
             {
                 case PlayerStatTypes.Health:
-                    GameEngine.Player.ChangeHealth(ChangeAmount);
+                    player.ChangeHealth(ChangeAmount);
                     break;
                 case PlayerStatTypes.Mana:
                     break;
@@ -40,7 +41,7 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.PlayerRelatedBe
                     throw new ArgumentOutOfRangeException(nameof(StatType), $"Unsupported stat type: {StatType}");
             }
 
-            IOService.Output.WriteLine($"You now have {GameEngine.Player.Stats.GetStat(PlayerStatTypes.Health)} HP.");
+            IOService.Output.WriteLine($"You now have {player.Stats.GetStat(PlayerStatTypes.Health)} HP.");
         }
 
         public override OnUseChangePlayerStatBehaviour DeepClone()

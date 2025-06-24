@@ -1,7 +1,9 @@
 ﻿using AshborneGame._Core._Player;
-using AshborneGame._Core.Globals.Services;
-using AshborneGame._Core.Globals.Interfaces;
 using AshborneGame._Core.Data.BOCS.ItemSystem;
+using AshborneGame._Core.Globals.Interfaces;
+using AshborneGame._Core.Globals.Services;
+using System.Numerics;
+using System.Text;
 
 namespace AshborneGame._Core.Game.CommandHandling.Commands.BaseCommands
 {
@@ -9,8 +11,6 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands.BaseCommands
 	{
 		protected int ParseQuantity(ref List<string> args)
 		{
-			if (args.Count == 0) return 1;
-
 			string first = args[0].ToLower();
 
 			if (int.TryParse(first, out int parsed) && parsed > 0)
@@ -27,9 +27,10 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands.BaseCommands
 			return 0; // Invalid
 		}
 
-		protected void ShowInventorySummary(Inventory inventory, string header)
+		protected void ShowInventorySummary(Player player, Inventory inventory, string header)
 		{
-			var (isEmpty, contents) = inventory.GetInventoryContents();
+			IOService.Output.WriteLine(header);
+			var (isEmpty, contents) = inventory.GetInventoryContents(player);
 			IOService.Output.WriteLine(isEmpty ? "Nothing." : header);
 			if (!isEmpty)
 			{

@@ -1,4 +1,5 @@
-﻿using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
 using AshborneGame._Core.Globals.Enums;
 using AshborneGame._Core.Globals.Services;
 
@@ -15,7 +16,7 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.CombatBehaviour
             ConsumeOnUse = consumeOnUse;
         }
 
-        public void Use(string? target = null)
+        public void Use(Player player, string? target = null)
         {
             // Implementation for applying the status effect to the target
             // For now just print a message

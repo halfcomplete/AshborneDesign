@@ -35,7 +35,7 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands
                 if (sublocation.Object.TryGetBehaviour<IInteractable>(out var lockUnlockBehaviour) && lockUnlockBehaviour is LockUnlockBehaviour)
                 {
                     LockUnlockBehaviour lockUnlockBehaviour1 = (LockUnlockBehaviour)lockUnlockBehaviour;
-                    openCloseBehaviour.Interact(ObjectInteractionTypes.Close);
+                    openCloseBehaviour.Interact(ObjectInteractionTypes.Close, player);
                 }
                 return false;
             }

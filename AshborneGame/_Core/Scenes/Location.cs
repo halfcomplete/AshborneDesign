@@ -1,5 +1,7 @@
-﻿using AshborneGame._Core.Globals.Interfaces;
+﻿using AshborneGame._Core._Player;
 using AshborneGame._Core.Game;
+using AshborneGame._Core.Globals.Interfaces;
+using System.Numerics;
 
 namespace AshborneGame._Core.Scenes
 {
@@ -109,7 +111,7 @@ namespace AshborneGame._Core.Scenes
             _sublocations.Add(sublocation);
         }
 
-        public string GetExits()
+        public string GetExits(Player player)
         {
             string exitString = string.Empty;
             bool _areThereHiddenExits = false;
@@ -120,7 +122,7 @@ namespace AshborneGame._Core.Scenes
             exitString += "You can go:\n";
             foreach (var _exit in _exits)
             {
-                if (_exit.Value.CanPlayerSeeExit())
+                if (_exit.Value.CanPlayerSeeExit(player))
                 {
                     exitString += $"- {_exit.Key} to {_exit.Value.Name}\n";
                 }
@@ -138,7 +140,7 @@ namespace AshborneGame._Core.Scenes
             return exitString;
         }
 
-        public string GetSublocations()
+        public string GetSublocations(Player player)
         {
             string sublocationString = string.Empty;
 
@@ -147,7 +149,7 @@ namespace AshborneGame._Core.Scenes
                 return "";
             }
 
-            bool areAllSublocationsHidden = _sublocations.All(s => !s.CanPlayerSeeSublocation());
+            bool areAllSublocationsHidden = _sublocations.All(s => !s.CanPlayerSeeSublocation(player));
             if (areAllSublocationsHidden)
             {
                 sublocationString += "You can't see much. If only it was brighter.\n";
@@ -158,7 +160,7 @@ namespace AshborneGame._Core.Scenes
             sublocationString += "You notice some other things nearby:\n";
             foreach (var sublocation in _sublocations)
             {
-                if (sublocation.CanPlayerSeeSublocation())
+                if (sublocation.CanPlayerSeeSublocation(player))
                 {
                     sublocationString += $"- a {sublocation.Name}\n";
                 }
@@ -180,31 +182,31 @@ namespace AshborneGame._Core.Scenes
         /// Determines if the player can see this location as an exit.
         /// </summary>
         /// <returns>True if the player can see this location; otherwise, false.</returns>
-        public bool CanPlayerSeeExit()
+        public bool CanPlayerSeeExit(Player player)
         {
-            return GameEngine.Player.Visibility >= _minimumVisibility;
+            return player.Visibility >= _minimumVisibility;
         }
 
-        public string GetDescription()
+        public string GetDescription(Player player)
         {
             string contextualDescription = Description;
-            if (GameEngine.Player.EquippedItems.Any(s => s.Value != null && s.Value.Name.Equals("torch", StringComparison.OrdinalIgnoreCase)))
+            if (player.EquippedItems.Any(s => s.Value != null && s.Value.Name.Equals("torch", StringComparison.OrdinalIgnoreCase)))
             {
                 contextualDescription += $". It is barely lit by your torch.";
             }
             return $"You are at {Name}. {contextualDescription}";
         }
 
-        public string GetFullDescription()
+        public string GetFullDescription(Player player)
         {
-            string description = GetDescription();
+            string description = GetDescription(player);
             if (_exits.Count > 0)
             {
-                description += "\n" + GetExits();
+                description += "\n" + GetExits(player);
             }
             if (_sublocations.Count > 0)
             {
-                description += "\n" + GetSublocations();
+                description += "\n" + GetSublocations(player);
             }
             return description;
         }

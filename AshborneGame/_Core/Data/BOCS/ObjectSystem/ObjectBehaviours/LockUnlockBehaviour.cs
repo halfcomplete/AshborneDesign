@@ -1,4 +1,5 @@
-﻿using AshborneGame._Core.Data.BOCS.CommonBehaviourModules;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Data.BOCS.CommonBehaviourModules;
 using AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviourModules;
 using AshborneGame._Core.Globals.Enums;
 using AshborneGame._Core.Globals.Services;
@@ -16,7 +17,7 @@ namespace AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviours
             IsLocked = initialState;
         }
 
-        public void Interact(ObjectInteractionTypes _interaction)
+        public void Interact(ObjectInteractionTypes _interaction, Player player)
         {
             switch (_interaction)
             {

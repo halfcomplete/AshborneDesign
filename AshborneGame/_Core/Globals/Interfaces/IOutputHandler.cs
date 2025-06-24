@@ -6,6 +6,6 @@ namespace AshborneGame._Core.Globals.Interfaces
     {
         void Write(string message);
         void WriteLine(string message);
-        void DisplayDebugMessage(string message, ConsoleMessageTypes type);
+        void DisplayDebugMessage(string message, ConsoleMessageTypes type = ConsoleMessageTypes.INFO);
     }
 }

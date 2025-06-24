@@ -1,5 +1,6 @@
-﻿using AshborneGame._Core.Game;
+﻿using AshborneGame._Core._Player;
 using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
+using AshborneGame._Core.Game;
 
 namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.UtilityBehaviours
 {
@@ -12,9 +13,9 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.UtilityBehaviou
             _visibilityIncreaseAmount = visibilityIncrease;
             ConsumeOnUse = consumeOnUse;
         }
-        public void OnUse()
+        public void OnUse(Player player)
         {
-            GameEngine.Player.SetVariable("visibility", GameEngine.Player.Visibility + _visibilityIncreaseAmount);
+            player.SetVariable("visibility", player.Visibility + _visibilityIncreaseAmount);
         }
 
         public override OnUseIncreaseVisibilityBehaviour DeepClone()

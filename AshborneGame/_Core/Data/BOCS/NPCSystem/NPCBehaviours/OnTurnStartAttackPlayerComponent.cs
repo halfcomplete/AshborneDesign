@@ -1,4 +1,5 @@
-﻿using AshborneGame._Core.Data.BOCS.ItemSystem;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Data.BOCS.ItemSystem;
 using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
 using AshborneGame._Core.Data.BOCS.NPCSystem.NPCBehaviourModules;
 using AshborneGame._Core.Game;
@@ -29,9 +30,9 @@ public class OnTurnStartAttackPlayerComponent : ICanAttackPlayer
         return 0;
     }
 
-    public void AttackPlayer()
+    public void AttackPlayer(Player player)
     {
-        GameEngine.Player.ChangeHealth(-AttackDamage);
-        IOService.Output.WriteLine($"The enemy attacks you with {Weapon.Name} for {AttackDamage} damage. You now have {GameEngine.Player.Stats.GetStat(PlayerStatTypes.Health)} HP left.");
+        player.ChangeHealth(-AttackDamage);
+        IOService.Output.WriteLine($"The enemy attacks you with {Weapon.Name} for {AttackDamage} damage. You now have {player.Stats.GetStat(PlayerStatTypes.Health)} HP left.");
     }
 }

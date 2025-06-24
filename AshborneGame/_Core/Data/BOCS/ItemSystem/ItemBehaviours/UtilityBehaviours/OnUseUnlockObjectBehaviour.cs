@@ -1,4 +1,5 @@
-﻿using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
 using AshborneGame._Core.Data.BOCS.ObjectSystem;
 using AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviourModules;
 using AshborneGame._Core.Data.BOCS.ObjectSystem.ObjectBehaviours;
@@ -22,14 +23,14 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.UtilityBehaviou
             ConsumeOnUse = consumeOnUse;
         }
 
-        public void OnUse()
+        public void OnUse(Player player)
         {
             IOService.Output.DisplayDebugMessage("On Use Trigger successfully called for OnUseUnlockObjectBehaviour", ConsoleMessageTypes.INFO);
             BOCSGameObject? targetObject = null; // Reset targetObject to null before searching
             // If we're in a sublocation, get the object directly
-            if (GameEngine.Player.CurrentSublocation != null)
+            if (player.CurrentSublocation != null)
             {
-                targetObject = GameEngine.Player.CurrentSublocation.Object;
+                targetObject = player.CurrentSublocation.Object;
             }
             else // If we're in a regular location, output and return
             {
@@ -41,8 +42,8 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.UtilityBehaviou
             {
                 if (targetObject != null && targetObject.GetAllBehaviours<IInteractable>().ToList().Any(s => s is LockUnlockBehaviour))
                 {
-                    dynamic lockUnlockBehaviour = targetObject.GetAllBehaviours<IInteractable>().ToList().First(s => s.GetType() == typeof(LockUnlockBehaviour));
-                    lockUnlockBehaviour.Interact(ObjectInteractionTypes.Unlock);
+                    var lockUnlockBehaviour = targetObject.GetAllBehaviours<IInteractable>().ToList().First(s => s.GetType() == typeof(LockUnlockBehaviour));
+                    lockUnlockBehaviour.Interact(ObjectInteractionTypes.Unlock, player);
                     return;
                 }
             }

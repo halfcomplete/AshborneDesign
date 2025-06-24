@@ -20,26 +20,49 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands.InventoryCommands
                 return false;
             }
 
-            int quantity = ParseQuantity(ref args);
-            if (quantity == 0)
-            {
-                IOService.Output.WriteLine("Invalid amount.");
-                return false;
-            }
-
-            string itemName = string.Join(" ", args).Trim();
             Inventory originInventory = player.Inventory;
             Inventory? destinationInventory = ResolveDestinationInventory(player);
-
-            if (quantity < 0 && string.IsNullOrEmpty(itemName))
-            {
-                return GiveAllItems(originInventory, destinationInventory);
-            }
 
             if (destinationInventory == null)
             {
                 IOService.Output.WriteLine("You are not targeting a container or an NPC with an inventory.");
                 return false;
+            }
+
+            // Get the target quantity of the item to give. 0 = invalid, -1 = all
+            int quantity = ParseQuantity(ref args);
+            string itemName = string.Join(" ", args).Trim();
+
+            if (quantity == 0)
+            {
+                if (originInventory.GetItem(itemName) != null)
+                {
+                    quantity = 1;
+                }
+                else
+                {
+                    IOService.Output.WriteLine("Invalid amount.");
+                    return false;
+                }
+            }
+
+            if (quantity < 0)
+            {
+                if (string.IsNullOrEmpty(itemName))
+                {
+                    return GiveAllItems(player, originInventory, destinationInventory);
+                }
+                else
+                {
+                    Item? targetItem = originInventory.GetItem(itemName);
+                    if (targetItem == null)
+                    {
+                        IOService.Output.WriteLine($"You cannot give {itemName} because it is not in your inventory.");
+                        return false;
+                    }
+                    GiveAllOfAnItem(originInventory, destinationInventory, targetItem);
+                    return true;
+                }
             }
 
             if (string.IsNullOrEmpty(itemName))
@@ -73,8 +96,8 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands.InventoryCommands
             originInventory.TransferItem(originInventory, destinationInventory, item, quantity);
             IOService.Output.WriteLine($"Successfully gave {quantity} x {item.Name}.");
 
-            ShowInventorySummary(player.Inventory, "Your inventory now contains:");
-            ShowInventorySummary(destinationInventory, "The opened container / NPC now has:");
+            ShowInventorySummary(player, player.Inventory, "Your inventory now contains:");
+            ShowInventorySummary(player, destinationInventory, "The opened container / NPC now has:");
 
             return true;
         }
@@ -93,7 +116,7 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands.InventoryCommands
             return null;
         }
 
-        private bool GiveAllItems(Inventory origin, Inventory? destination)
+        private bool GiveAllItems(Player player, Inventory origin, Inventory? destination)
         {
             if (destination == null)
             {
@@ -104,10 +127,16 @@ namespace AshborneGame._Core.Game.CommandHandling.Commands.InventoryCommands
             origin.TransferAllItems(origin, destination);
             IOService.Output.WriteLine("You gave all your items.");
 
-            ShowInventorySummary(origin, "Your inventory is now empty.");
-            ShowInventorySummary(destination, "The opened container / NPC now has:");
+            ShowInventorySummary(player, origin, "Your inventory is now empty.");
+            ShowInventorySummary(player, destination, "The opened container / NPC now has:");
 
             return true;
+        }
+
+        private void GiveAllOfAnItem(Inventory origin, Inventory destination, Item item)
+        {
+            int count = origin.Slots.Where(s => s.Item.Name == item.Name).Sum(s => s.Quantity);
+            origin.TransferItem(origin, destination, item, count);
         }
     }
 }

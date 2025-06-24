@@ -74,6 +74,13 @@ namespace AshborneGame._Core._Player
             Inventory = new Inventory();
         }
 
+        public Player(string name)
+        {
+            _name = name;
+            CurrentLocation = new Location("Placeholder", "Placeholder", 5);
+            Inventory = new Inventory();
+        }
+
         /// <summary>
         /// Initialises a new instance of the Player class with a custom name.
         /// </summary>
@@ -95,6 +102,7 @@ namespace AshborneGame._Core._Player
         public void MoveTo(Sublocation newLocation)
         {
             CurrentSublocation = newLocation ?? throw new ArgumentNullException(nameof(newLocation));
+            IOService.Output.WriteLine(CurrentSublocation.GetFullDescription(this));
         }
 
         /// <summary>
@@ -106,6 +114,7 @@ namespace AshborneGame._Core._Player
         {
             CurrentLocation = newLocation ?? throw new ArgumentNullException(nameof(newLocation));
             CurrentSublocation = null;
+            IOService.Output.WriteLine(CurrentLocation.GetFullDescription(this));
         }
 
         /// <summary>
@@ -121,7 +130,7 @@ namespace AshborneGame._Core._Player
 
             string place = string.Join(" ", parsedInput).ToLower().Trim();
 
-            IOService.Output.WriteLine("Move to... " + place);
+            IOService.Output.DisplayDebugMessage("Move to... " + place, ConsoleMessageTypes.INFO);
 
             if (_directions.Contains(place))
             {

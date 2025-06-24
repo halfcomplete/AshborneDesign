@@ -1,4 +1,5 @@
-﻿using AshborneGame._Core.Game;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Game;
 using AshborneGame._Core.Globals.Services;
 
 namespace AshborneGame._Core.Data.BOCS.NPCSystem
@@ -49,10 +50,10 @@ namespace AshborneGame._Core.Data.BOCS.NPCSystem
             SelfDescription = selfDescription ?? throw new ArgumentNullException(nameof(selfDescription), "SelfDescription cannot be null.");
         }
 
-        public virtual void Talk()
+        public virtual void Talk(Player player)
         {
             IOService.Output.WriteLine($"{Name}: {Greeting} {SelfDescription}.");
-            GameEngine.Player.CurrentNPCInteraction = this;
+            player.CurrentNPCInteraction = this;
         }
     }
 }

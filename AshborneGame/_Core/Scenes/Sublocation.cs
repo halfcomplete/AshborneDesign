@@ -1,4 +1,5 @@
-﻿using AshborneGame._Core.Data.BOCS;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Data.BOCS;
 
 namespace AshborneGame._Core.Scenes
 {
@@ -37,7 +38,7 @@ namespace AshborneGame._Core.Scenes
         /// Determines if the player can see this sublocation.
         /// </summary>
         /// <returns>True if the player can see this sublocation; otherwise, false.</returns>
-        public bool CanPlayerSeeSublocation() => CanPlayerSeeExit();
+        public bool CanPlayerSeeSublocation(Player player) => CanPlayerSeeExit(player);
         
     }
 }

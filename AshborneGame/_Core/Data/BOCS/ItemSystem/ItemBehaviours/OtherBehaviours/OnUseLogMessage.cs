@@ -1,6 +1,7 @@
-﻿using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
-using AshborneGame._Core.Globals.Services;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
 using AshborneGame._Core.Globals.Enums;
+using AshborneGame._Core.Globals.Services;
 
 namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.OtherBehaviours
 {
@@ -14,7 +15,7 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.OtherBehaviours
             this.message = message;
         }
 
-        public void OnUse()
+        public void OnUse(Player player)
         {
             IOService.Output.DisplayDebugMessage($"On Use Trigger successfully called, message: {message}", ConsoleMessageTypes.INFO);
         }

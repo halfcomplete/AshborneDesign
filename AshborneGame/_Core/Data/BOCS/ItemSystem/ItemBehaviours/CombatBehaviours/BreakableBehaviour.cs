@@ -1,4 +1,5 @@
-﻿using AshborneGame._Core.Data.BOCS.CommonBehaviourModules;
+﻿using AshborneGame._Core._Player;
+using AshborneGame._Core.Data.BOCS.CommonBehaviourModules;
 using AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviourModules;
 using AshborneGame._Core.Game;
 using AshborneGame._Core.Globals.Services;
@@ -22,12 +23,12 @@ namespace AshborneGame._Core.Data.BOCS.ItemSystem.ItemBehaviours.CombatBehaviour
             MaxDurability = maxDurability;
             Durability = maxDurability;
         }
-        public void OnBreak()
+        public void OnBreak(Player player)
         {
             // Implementation for what happens when the item breaks
             if(ParentObject is Item item)
             {
-                GameEngine.Player.Inventory.RemoveItem(item, 1); // Remove the item from the player's inventory
+                player.Inventory.RemoveItem(item, 1); // Remove the item from the player's inventory
             }
             IOService.Output.WriteLine("The item has broken!");
         }
