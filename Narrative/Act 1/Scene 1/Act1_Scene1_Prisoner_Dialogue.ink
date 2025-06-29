@@ -134,13 +134,61 @@ EXTERNAL setCounter(counterName, value)
 
 == LEAVE ==
 ~ temp alreadyLeftBefore = hasFlag("left_bound_one_before")
+~ temp askedWho = hasFlag("asked_bound_one_identity")
+~ temp askedWhy = hasFlag("asked_bound_one_why")
+~ temp askedHelp = hasFlag("asked_bound_one_help")
+~ temp askedLikeMe = hasFlag("asked_bound_one_likeme")
+~ temp freed = hasFlag("freed_bound_one")
+
+~ temp curiosityLevel = 0
+{ askedWho:
+    ~ curiosityLevel++
+}
+
+{ askedWhy:
+    ~ curiosityLevel++
+}
+
+{ askedHelp:
+    ~ curiosityLevel++
+}
+
+{ askedLikeMe:
+    ~ curiosityLevel++
+}
 
 { alreadyLeftBefore:
-    Chainer Prisoner: "Running again, are we? Go on, then. It’s easier that way."
+    { freed:
+            Chainer Prisoner: "You pulled one chain. Maybe that's enough to remind me what freedom tastes like."
+        - else:
+            { curiosityLevel == 0:
+                Chainer Prisoner: Thanks
+            curiosityLevel == 1:
+                Chainer Prisoner: "One question, and you're gone? The chains aren’t the only thing that binds."
+            - curiosityLevel == 2:
+                Chainer Prisoner: "You’re uncertain. I see it. Maybe you're afraid of what you'd become if you listened too long."
+            - curiosityLevel >= 3:
+                Chainer Prisoner: "You asked. You listened. That's rarer than freedom. Don’t lose it."
+            }
+        }
+        ~ setFlag("left_bound_one_before", true)
 - else:
-    Chainer Prisoner: "Don't lose what made you help me. That's rarer than freedom."
+    { freed:
+        Chainer Prisoner: "You pulled one chain. Maybe that's enough to remind me what freedom tastes like."
+    - else:
+        { curiosityLevel == 0:
+            Chainer Prisoner: Thanks
+        - curiosityLevel == 1:
+            Chainer Prisoner: "One question, and you're gone? The chains aren’t the only thing that binds."
+        - curiosityLevel == 2:
+            Chainer Prisoner: "You’re uncertain. I see it. Maybe you're afraid of what you'd become if you listened too long."
+        - curiosityLevel >= 3:
+            Chainer Prisoner: "You asked. You listened. That's rarer than freedom. Don’t lose it."
+        }
+    }
     ~ setFlag("left_bound_one_before", true)
 }
+
 ~ setFlag("talked_to_bound_one", true)
 You're back at the foot of the slope.
 -> END
