@@ -3,8 +3,6 @@ EXTERNAL hasFlag(flagName)
 EXTERNAL setFlag(flagName, value)
 EXTERNAL setCounter(counterName, value)
 
-VAR visited_before = false
-
 -> MAIN
 
 == MAIN ==
@@ -14,8 +12,6 @@ VAR visited_before = false
 - else:
     "He groans. A rasp of a voice follows.\n\n\"Another dreamer, then. Or… are you something worse?\""
 }
-
-~ visited_before = true
 
 + [Who are you?]
     -> FORGOT
@@ -145,6 +141,6 @@ VAR visited_before = false
     Chainer Prisoner: "Don't lose what made you help me. That's rarer than freedom."
     ~ setFlag("left_bound_one_before", true)
 }
-
-"You're back at the centre of the frozen sea."
+~ setFlag("talked_to_bound_one", true)
+You're back at the foot of the slope.
 -> END
