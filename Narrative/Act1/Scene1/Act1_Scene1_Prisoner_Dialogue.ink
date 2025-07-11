@@ -8,18 +8,23 @@ EXTERNAL setCounter(counterName, value)
 == MAIN ==
 
 { hasFlag("talked_to_bound_one"):
-    "You're back."
+    Chained Prionser: "You're back."
 - else:
-    He groans. A rasp of a voice follows.\n\n\"Another dreamer, then. Or… are you something worse?\"
+    [He groans. A rasp of a voice follows.]
+    Chained Prisoner: "Another dreamer, then. Or… are you something worse?"
 }
 
-+ [Ask about his past]
-    ~ setFlag("talked_bound_one_past", true)
++ ["Who are you?"]
+    ~ setFlag("talked_bound_one_identity", true)
     -> PAST_START
 
-+ [Ask what he sees in you]
++ ["Why are you here?"]
     ~ setFlag("talked_bound_one_self", true)
     -> YOU_START
+
++ ["What happened to you?"]
+    ~ setFlag("talked_bound_one_happened", true)
+    -> HAPPENED_START
 
 + [Offer help]
     ~ setFlag("talked_bound_one_help", true)
@@ -29,46 +34,55 @@ EXTERNAL setCounter(counterName, value)
     -> LEAVE
 
 == PAST_START ==
-Chainer Prisoner: "You want to know what I was before the chains. Curious."
+[You look at the prisoner with questioning eyes.]
+Player: "Who are you?"
+Chainer Prisoner: "A curious question indeed. Even I'm not sure."
 
-* [Yes. Who were you?]
+* ["Just answer the question. Who are you?"]
     -> PAST_IDENTITY
 
-* [What did you do to end up here?]
-    -> PAST_CRIME
+* ["How come?"]
+    -> PAST_FORGET
 
 * [Change your mind]
     -> MAIN
 
 == PAST_IDENTITY ==
-Chainer Prisoner: "I was a guard. A brother. A believer. All three. None, maybe."
+[He laughs. It's not a nice, hearty laugh - the laugh echoes with mockery and spite.]
+Chainer Prisoner: "Not one for fun, are you? Well, I was a normal person like you. A brother. A father. A believer. All three. None, maybe."
+[The prisoner sighs.]
+Chained Prisoner: "I was only ever good at being the believer..."
 
-* [A believer in what?]
+* ["Believer? A believer in what?"]
     -> PAST_BELIEVER
 
-* [You don't sound sure.]
-    -> PAST_REGRET
+* ["You don't sound sure."]
+    -> PAST_FORGET
 
 == PAST_BELIEVER ==
-Chainer Prisoner: "In the Mask. In the Eye. In the lie. Whatever name you give it."
+You: "Believer? A believer in what?"
+Chainer Prisoner: "In the Mask. In the Eye. In the lie. Whatever name you give it. The name doesn't really matter."
 
-* [So you followed Ossaneth?]
+* ["So you followed Ossaneth?"]
     -> PAST_FOLLOWED
 
-* [You think it was a lie now?]
+* ["You think it was a lie now?"]
     -> PAST_DISILLUSION
 
 == PAST_FOLLOWED ==
-Chainer Prisoner: "I didn’t follow. I knelt. That was the mistake."
+[You lean closer, your mind intrigued.]
+You: "So you followed Ossaneth?"
+Chainer Prisoner: "I didn’t follow. The word 'following' is interesting - it implies a sense of "
 
 -> PAST_WRAPUP
 
 == PAST_DISILLUSION ==
-Chainer Prisoner: "The truth's a blade. Sharp when you grip it too long."
+[He scoffs.]
+Chained Prisoner: "Please. You don't even know what 'it' is."
 
 -> PAST_WRAPUP
 
-== PAST_REGRET ==
+== PAST_FORGET ==
 Chainer Prisoner: "Would you be sure, after years in chains?"
 
 -> PAST_WRAPUP
@@ -85,7 +99,8 @@ Chainer Prisoner: "From it. From the Eye. From what I saw in myself when it star
 -> PAST_WRAPUP
 
 == PAST_WRAPUP ==
-Chainer Prisoner: "There’s nothing back there but broken promises and broken me."
+[He closes his eyes.]
+Chainer Prisoner: "You shouldn't be so interested. The past is past and there's no value in looking back on it."
 -> MAIN
 
 == YOU_START ==
