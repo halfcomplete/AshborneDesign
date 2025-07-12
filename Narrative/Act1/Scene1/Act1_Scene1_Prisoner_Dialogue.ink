@@ -141,6 +141,11 @@ Chainer Prisoner: "Maybe. But I’ve seen enough to guess. You're not the first 
 
 -> MAIN
 
+== HAPPENED_START ==
+Chained Prisoner: "I dunno, lol."
+
+-> MAIN
+
 == HELP_START ==
 ~ temp resolve = getPlayerStat("resolve")
 
