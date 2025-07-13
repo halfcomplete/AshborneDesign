@@ -28,7 +28,7 @@ EXTERNAL pause(ms)
 + ["Why are you here?"]
     -> WHY_START
     
-+ [Offer help]
+* [Offer help]
     -> HELP_START
 
 + [Leave]
@@ -134,6 +134,8 @@ You: "Why are you here? What happened to you?"
     You: "So... you get imprisoned in some strange dreamspace if you leave a Mask on for too long?"
     Chained Prisoner: "No, what? That's stupid. You die if you do that. Or your mind does. The Mask takes over your body. I'm here, body and mind, like you."
     "I got here because I tried to resist Ossaneth's takeover. So it trapped me here, and sentenced me to an eternity in hell. Or, whatever this place is. A lot better than dying, I suppose. Since you're here, you've put Ossaneth on for the first time. Remember: it's better here than dead."
+    You: "Aren't you afraid Ossaneth will hear?"
+    Chained Prisoner: "Of course he hears. He hears, and sees, everything. But sometimes he just doesn't care."
     -> MAIN
 }
 [The prisoner laughs, the chuckle filling up the empty space.]
@@ -143,7 +145,7 @@ Chained Prisoner: "I left Ossaneth on too long."
     
 == WHY_OSSANETH ==
 ~ setFlag("player.actions.talked.to_bound_one_ossaneth", true)
-You: "Ossaneth? I've... heard that name before."
+You: "Ossaneth? I've heard that name before."
 Chained Prisoner: "Yeah, everyone has. You're not special."
 You: "Who is it, really? Or, what is it?"
 Chained Prisoner: "Ossaneth is a Mask. Masks are sentient objects that can be put on, or forced on, a face. Either way, each Mask provides unique powers to the wearer - Ossaneth, the Unblinking Eye, gives the wearer foresight, lie detection, and heightened observation."
@@ -172,8 +174,8 @@ Chained Prisoner: "No, what? That's stupid. You die if you do that. Or your mind
 == HELP_START ==
 ~ setFlag("player.actions.talked.to_bound_one_help", true)
 ~ temp resolve = getPlayerStat("resolve")
-
-Chainer Prisoner: "Help? A word lighter than the chain you’ll have to break."
+You: "Let me help you."
+Chainer Prisoner: "Help? I've been trying to help myself for years now, what makes you think you can?"
 
 * ["I can try."]
     { resolve >= 3:
@@ -182,13 +184,19 @@ Chainer Prisoner: "Help? A word lighter than the chain you’ll have to break."
         -> HELP_FAIL
     }
 
-* ["You're right. I can’t."]
+* ["Fine. I won't."]
     -> HELP_DENY
 
 == HELP_TRY ==
+You: "I can try."
 Chainer Prisoner: "Then try. But remember, pain listens better than mercy."
 
-[You grip a link. Heat burns through your skin as you pull, pull, pull...]
+[You grip a link.]
+[Heat burns through your skin.]
+#slow:200
+[You pull, pull, pull...]
+
+~ pause(1000)
 
 [One chain shatters.]
 
@@ -197,16 +205,20 @@ Chainer Prisoner: "You... you did it. One chain."
 -> MAIN
 
 == HELP_FAIL ==
+You: "I can try."
 Chainer Prisoner: "No. You can't. Not yet. You’d snap before the metal does."
 
 -> MAIN
 
 == HELP_DENY ==
+You: "Fine. I won't."
 Chainer Prisoner: "Then you understand. Kindness is often a cruelty to both."
 
 -> MAIN
 
 == LEAVE ==
+[You turn to leave.]
+[Before you do, the prisoner speaks up one last time.]
 ~ temp past = hasFlag("player.actions.talked.to_bound_one_past")
 ~ temp self = hasFlag("player.actions.talked.to_bound_one_self")
 ~ temp help = hasFlag("player.actions.talked.to_bound_one_help")
