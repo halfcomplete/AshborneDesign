@@ -1,10 +1,8 @@
-VAR player_name = ""
-
 EXTERNAL pause(ms)
 EXTERNAL playerForceMask(maskName)
 EXTERNAL setFlag(key, value)
 EXTERNAL setCounter(key, value)
-EXTERNAL getPlayerInput()
+EXTERNAL getLabel(key)
 EXTERNAL setLabel(key, value)
 
 # 1_1_Shackled 
@@ -19,18 +17,23 @@ EXTERNAL setLabel(key, value)
 
 == INTRO ==
 #slow:300
-You wake. 
+[You wake.]
 
 ~ pause(3000)
 
-The cold, hard floor pushes against your seated body. Shackles around your wrists and ankles pin you to the ground. Your mind is foggy like it has not been used for days.
+[The cold, hard floor pushes against your seated body.]
+[Shackles around your wrists and ankles pin you to the ground.]
+[Your mind is foggy like it hasn't been used for days.]
 
-Around you, three hooded figures stand, cloaked in darkness.
+[Around you, three hooded figures stand, cloaked in darkness.]
 
-A rattling voice from in front breaks the silence. "He wakes."
-"Does he know his name?" asks the voice to your left.
-There's a scoff on your right. "That matters not, Truth."
-"Peace, Mercy. Peace," says the figure in front. "You - you poor, chained creature, do you know your name?"
+[A rattling voice from in front breaks the silence.]
+"He wakes."
+Left: "Does he know his name?"
+[There's a scoff on your right.]
+"That matters not, Truth."
+Figure in front: "Peace, Mercy. Peace,"
+"You - you poor, chained creature, do you know your name?"
 
 -> CHOOSE_NAME
 
@@ -45,12 +48,13 @@ There's a scoff on your right. "That matters not, Truth."
 * [Say your name]
     -> INPUT_NAME
     
-* [Say no]
+* ["No."]
     -> DOESNT_KNOW_NAME
 
 == INPUT_NAME ==
-~ player_name = getPlayerInput()
-~ setLabel("player.name", player_name)
+__GET_PLAYER_INPUT__
+~ temp player_name = getLabel("player.input")
+You: "{player_name}..."
 Figure in front: "{player_name}?"
 ~ pause(300)
 #slow:200
@@ -62,7 +66,11 @@ Order: "Unfortunate."
 -> INPUT_KNOW_WHO_THE_WITNESSES_ARE
 
 == DOESNT_KNOW_NAME ==
-
+Figure in front: "How come?"
+Mercy: "He doesn't know, Order, that's why."
+Mercy: "Or perhaps he chooses not to."
+[There is silence.]
+~ pause(300)
 -> INPUT_KNOW_WHO_THE_WITNESSES_ARE
 
 == INPUT_KNOW_WHO_THE_WITNESSES_ARE ==
