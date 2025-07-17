@@ -1,7 +1,6 @@
 EXTERNAL getPlayerStat(statName)
 EXTERNAL hasFlag(flagName)
 EXTERNAL setFlag(flagName, value)
-EXTERNAL pause(ms)
 
 -> INTRO
 
@@ -49,14 +48,14 @@ EXTERNAL pause(ms)
 You: "Who are you?"
 ~ setFlag("player.actions.talked.to_bound_one_who", true)
 [The prisoner sighs and breaks into a coughing fit.]
-~ pause(1700)
+1700__PAUSE__
 Chained Prisoner: "A curious question indeed. If you were me, would you know?"
 
 * ["Just answer the question. Who are you?"]
     You: "Just answer the question. Who are you?"
     [He smiles.]
     Chained Prisoner: "Not one for nice, long conversations, are you? What, are you afraid we'll run out of time? There's plenty of time here. More than enough to share."
-    ~ pause (2400)
+    2400__PAUSE__
     [Nothing happens.]
     [The smile disappears.]
     -> WHO_AGAIN
@@ -84,7 +83,7 @@ Chained Prisoner: "You're persistent, I'll give you that. I was a brother, a fat
     -> MAIN
 + ["A father?"]
     You: "A father? Of whom?"
-    ~ pause(1500)
+    1500__PAUSE__
     #slow:90
     Chained Prisoner: "I'm... not so sure..."
     -> MAIN
@@ -97,7 +96,7 @@ You: "A follower? In what?"
 [He stares straight back at you.]
 Chained Prisoner, whispering: "In Ossaneth. The Unblinking Eye."
 ~ setFlag("player.actions.talked.to_bound_one_mentioned_ossaneth", true)
-~ pause(200)
+200__PAUSE__
 -> MAIN
 
 == OSSANETH ==
@@ -107,9 +106,9 @@ Chained Prisoner: "Yeah, everyone has. You're not special."
 You: "Who is it, really? Or, what is it?"
 Chained Prisoner: "Ossaneth is a Mask. Masks are sentient objects that can be put on, or forced on, a face. Either way, each Mask provides unique powers to the wearer - Ossaneth, the Unblinking Eye, gives the wearer foresight, lie detection, and heightened observation."
 You: "That's amazing. Why doesn't everyone just wear a mask then?"
-~ pause(100)
+100__PAUSE__
 Chained Prisoner: "There's only a few thousand in the entire world. Though, more are being found every year."
-~ pause(200)
+200__PAUSE__
 Chained Prisoner: "Also, if worn for a long time, the Mask can gradually turn your mind into its vessel. You don't want to see what happens then."
 [You shudder involuntarily.]
 You: "You can take a mask off whenever, right...?"
@@ -117,7 +116,7 @@ Chained Prisoner: "You can, but is it worth it?"
 You: "What do you mean? Of course it's worth it - who wants to turn insane?"
 [His voice turns thirsty.]
 "But you'd all lose all that power, and another bonus that Masks provide - secrecy. When wearing a Mask, you are that Mask. Different people wearing the same Mask are the same person when wearing the Mask. This of course means that the same person wearing different Masks are different people when wearing those Masks. If you take the Mask off, especially in front of people, your identity will be exposed."
-~ pause(1000)
+1000__PAUSE__
 Chained Prisoner: "You might find, in time, that it's often better to keep the Mask on."
 -> MAIN
 
@@ -150,9 +149,9 @@ Chained Prisoner: "Yeah, everyone has. You're not special."
 You: "Who is it, really? Or, what is it?"
 Chained Prisoner: "Ossaneth is a Mask. Masks are sentient objects that can be put on, or forced on, a face. Either way, each Mask provides unique powers to the wearer - Ossaneth, the Unblinking Eye, gives the wearer foresight, lie detection, and heightened observation."
 You: "That's amazing. Why doesn't everyone just wear a mask then?"
-~ pause(100)
+100__PAUSE__
 Chained Prisoner: "There's only a few thousand in the entire world. Though, more are being found every year."
-~ pause(200)
+200__PAUSE__
 "Also, if worn for a long time, the Mask can gradually turn your mind into its vessel. You don't want to see what happens then."
 [You shudder involuntarily.]
 + ["You can take a mask off whenever, right...?"]
@@ -164,7 +163,7 @@ Chained Prisoner: "You can, but is it worth it?"
 You: "What do you mean? Of course it's worth it - who wants to turn insane?"
 [His voice turns thirsty.]
 "But you'd all lose all that power, and another bonus that Masks provide - secrecy. When wearing a Mask, you are that Mask. Different people wearing the same Mask are the same person when wearing the Mask. This of course means that the same person wearing different Masks are different people when wearing those Masks. If you take the Mask off, especially in front of people, your identity will be exposed."
-~ pause(1000)
+1000__PAUSE__
 + ["So... you get imprisoned in some strange dreamspace if you leave a Mask on for too long?"]
 You: "So... you get imprisoned in some strange dreamspace if you leave a Mask on for too long?"
 Chained Prisoner: "No, what? That's stupid. You die if you do that. Or your mind does. The Mask takes over your body. I'm here, body and mind, like you."
@@ -196,7 +195,7 @@ Chainer Prisoner: "Then try. But remember, pain listens better than mercy."
 #slow:200
 [You pull, pull, pull...]
 
-~ pause(1000)
+1000__PAUSE__
 
 [One chain shatters.]
 
@@ -245,6 +244,7 @@ Chainer Prisoner: "Then you understand. Kindness is often a cruelty to both."
 ~ setFlag("player.actions.talked.to_bound_one", true)
 
 You're back at the foot of the slope.
+__END__
 -> END
 
 == function getPlayerStat(statName) ==
