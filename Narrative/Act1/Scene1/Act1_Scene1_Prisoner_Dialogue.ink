@@ -21,7 +21,7 @@ EXTERNAL setFlag(flagName, value)
         -> OSSANETH
 }
 
-+ ["Who are you?"]
++ ["Who... who are you?"]
     -> WHO_START
     
 + ["Why are you here?"]
@@ -37,7 +37,7 @@ EXTERNAL setFlag(flagName, value)
 
 { hasFlag("player.actions.talked.to_bound_one_who"):
     { hasFlag("player.actions.talked.to_bound_one_who_again"):
-        You: "Who are you?"
+        You: "Who... who are you?"
         Chained Prisoner: "Again? I know I said that there's plenty of time here, wherever here is... but that doesn't mean you can go around and ask me useless questions that I've already answered."
         -> MAIN
     - else:
@@ -45,7 +45,7 @@ EXTERNAL setFlag(flagName, value)
         -> WHO_AGAIN
     }
 }
-You: "Who are you?"
+You: "Who... who are you?"
 ~ setFlag("player.actions.talked.to_bound_one_who", true)
 [The prisoner sighs and breaks into a coughing fit.]
 1700__PAUSE__
