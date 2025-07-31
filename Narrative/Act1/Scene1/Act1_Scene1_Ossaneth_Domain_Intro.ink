@@ -1,8 +1,13 @@
 EXTERNAL setCounter(key, value)
 
-300__PAUSE__
-#slow:150
-Ossaneth: Welcome to my domain. This is where we shall get acquainted."
+2000__PAUSE__
+__NL__
+__NL__
+__NL__
+#slow:30
+You wake once more.
+__NL__
+
 ~ setCounter("player.gone_to.ossaneth_domain", 1)
 __END__
 -> END
