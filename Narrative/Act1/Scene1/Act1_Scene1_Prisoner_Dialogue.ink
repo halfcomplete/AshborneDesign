@@ -71,7 +71,7 @@ Chained Prisoner: "After all these years in chains, it's good enough that you st
 
 
 == WHO_AGAIN ==
-Chained Prisoner: "You're persistent, I'll give you that. I was a brother, a father, a follower. All three, or none, maybe. Chains wear away the mind as much it does your body."
+THe prisoner chuckles. "You're persistent, I'll give you that. I was a brother, a father, a follower. All three, or none, maybe. Chains wear away the mind as much it does your body."
 
 + ["I was also a brother once."]
     You: "I was also a brother once. Not sure if I'm still one."
@@ -91,10 +91,9 @@ Chained Prisoner: "You're persistent, I'll give you that. I was a brother, a fat
     -> WHO_AGAIN_FOLLOWER
     
 == WHO_AGAIN_FOLLOWER ==
-You: "A follower? In what?"
-[The prisoner glances around in caution, eyes darting around.]
-[He stares straight back at you.]
-Chained Prisoner, whispering: "In Ossaneth. The Unblinking Eye."
+"A follower? In what?" you ask.
+The prisoner glances around in caution, eyes darting around.
+He stares straight back at you and"In Ossaneth. The Unblinking Eye."
 ~ setFlag("player.actions.talked.to_bound_one_mentioned_ossaneth", true)
 200__PAUSE__
 -> MAIN
