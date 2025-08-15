@@ -4,7 +4,7 @@ EXTERNAL setCounter(key, value)
 __NL__
 __NL__
 __NL__
-#slow:30
+#slow:25
 You wake once more.
 __NL__
 
