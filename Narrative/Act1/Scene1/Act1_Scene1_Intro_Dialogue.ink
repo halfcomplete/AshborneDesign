@@ -132,7 +132,7 @@ Even in your silence, their names linger in thought: Mercy, Truth, Judgement.
 
 == INPUT_NAME ==
 ~ setSilentPath("SAY_NAME_SILENT_ONE", 25000)
-__GET_PLAYER_INPUT__
+__GET_PLAYER_INPUT__:What is your name?
 ~ temp player_name = getLabel("player.input")
 
 __NL__
