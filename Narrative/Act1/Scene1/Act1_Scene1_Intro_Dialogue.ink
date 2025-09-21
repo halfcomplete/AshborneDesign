@@ -203,7 +203,7 @@ Mercy says, "The procedure must start soon."
     You gulp, having decided what to ask.
     You, hestitant: "What... are you going to do to me?"
 - else:
-    [You gulp, having finally decided what to ask.]
+    You gulp, having finally decided what to ask.
     You: "What... are you going to do to me?"
 }
 
@@ -213,19 +213,19 @@ Mercy says, "The procedure must start soon."
 Mercy asks, "Is that your question?"
 __NL__
 + ["Yes."]
-    You, confident: "Yes."
+    "Yes." You grow in confidence.
     __NL__
     255__PAUSE__
-    Truth, disappointed: "A terrible question. You'll find out anyway."
+    "A terrible question." Truth sounds disappointed. "You'll find out anyway."
     -> FINAL
 + ["No."]
-    [You're unsure of whether you should ask this. The only thing you're sure of is that they know you're unsure.]
+    You're unsure of whether you should ask this. The only thing you're sure of is that they know you're unsure.
     __NL__
     90__PAUSE__
     You: "No..."
     190__PAUSE__
     __NL__
-    Mercy, impatient: "Well then, what is it? We're running out of time."
+    Mercy grows impatient. "Well then, what is it? We're running out of time."
     -> QUESTION
 
 == WHO ==
@@ -234,7 +234,7 @@ __NL__
     #slow:22
     "Who... who are you?"
 - else:
-    [You gulp, having finally decided what to ask.]
+    You gulp, having finally decided what to ask.
     You: "Who... who are you?"
 }
 340__PAUSE__
@@ -258,7 +258,7 @@ __NL__
     595__PAUSE__
     -> FINAL
 + ["No."]
-    [You're unsure of whether you should ask this. The only thing you're sure of is that they know you're unsure.]
+    You're unsure of whether you should ask this. The only thing you're sure of is that they know you're unsure.
     __NL__
     90__PAUSE__
     You: "No..."
@@ -269,11 +269,12 @@ __NL__
 
 == WHAT ==
 { questionsAsked == 0:
-    [You gulp, having decided what to ask.]
-    You, hestitant: "What is this place?"
+    You gulp, having decided what to ask.
+    700__PAUSE__
+    "What is this place?"
 - else:
-    [You gulp, having finally decided what to ask.]
-    You: "What is this place?"
+    You gulp, having finally decided what to ask.
+    "What is this place?"
 }
 
 ~ questionsAsked += 1
@@ -282,34 +283,35 @@ __NL__
 Mercy asks, "Is that your question?"
 __NL__
 + ["Yes."]
-    You, confident: "Yes."
+    "Yes." You grow in confidence.
     255__PAUSE__
     __NL__
-    Truth says, "Hmm... an intriguing question."
+    "Hmm... an intriguing question," murmurs Truth.
     __NL__
     190__PAUSE__
-    Mercy says, "We're not sure either."
+    "We're not sure either," says Mercy.
     __NL__
-    Judgement says, "The Mask chose our meeting place. It was not our decision."
+    "The Mask chose our meeting place." Judgement says. "It was not our decision."
     -> FINAL
 + ["No."]
-    [You're unsure of whether you should ask this. The only thing you're sure of is that they know you're unsure.]
+    You're unsure of whether you should ask this. The only thing you're sure of is that they know you're unsure.
     90__PAUSE__
     __NL__
     You: "No..."
     190__PAUSE__
     __NL__
-    Mercy, impatient: "Well then, what is it? We're running out of time."
+    Mercy grows impatient. "Well then, what is it? We're running out of time."
     -> QUESTION
 
 == WHY ==
 
 { questionsAsked == 0:
-    [You gulp, having decided what to ask.]
-    You, hestitant: "Why am I here?"
+    You gulp, having decided what to ask.
+    700__PAUSE__
+    "Why am I here?"
 - else:
-    [You gulp, having finally decided what to ask.]
-    You: "Why am I here?"
+    You gulp, having finally decided what to ask.
+    "Why am I here?"
 }
 
 ~ questionsAsked += 1
@@ -320,21 +322,21 @@ __NL__
 + ["Yes."]
     You, confident: "Yes."
     255__PAUSE__
-    Truth says, "An intriguing question."
-    Judgement says, "You are here because you were chosen."
+    "An intriguing question," Truth murmurs.
+    "You are here because you were chosen," says Mercy
     190__PAUSE__
-    Mercy says, "It was not our decision. If it was, you wouldn't be with us."
+    "It was not our decision. If it was, you wouldn't be with us."
     
     __NL__
-    [The white eyes blind you.]
+    The white eyes blind you.
     __NL__
-    slow:16
+    #slow:16
     Judgement, snapping: "Do not question that of the Mask!"
     90__PAUSE__
     Mercy, bowing: "Deepest apologies, Judgement."
     -> FINAL
 + ["No."]
-    [You're unsure of whether you should ask this. The only thing you're sure of is that they know you're unsure.]
+    You're unsure of whether you should ask this. The only thing you're sure of is that they know you're unsure.
     __NL__
     90__PAUSE__
     __NL__
@@ -409,6 +411,15 @@ You faint.
 ~ setCounter("player.talked_to_witnesses_count", 1)
 
 3200__PAUSE__
+2000__PAUSE__
+__NL__
+__NL__
+__NL__
+#slow:25
+You wake once more.
+__NL__
+
+~ setCounter("player.gone_to.ossaneth_domain", 1)
 __END__
 -> END
 
