@@ -6,10 +6,9 @@ EXTERNAL setFlag(flagName, value)
 
 == INTRO
 { hasFlag("player.actions.talked.to_bound_one"):
-    Chained Prisoner: "You're back."
+    "You're back," he spits.
 - else:
-    [He groans. A rasp of a voice follows.]
-    Chained Prisoner: "Another dreamer, then. What do you want from me?"
+    He groans. A rasp of a voice follows. "Another dreamer, then. What do you want from me?"
 }
 
 -> MAIN
@@ -45,27 +44,28 @@ EXTERNAL setFlag(flagName, value)
         -> WHO_AGAIN
     }
 }
-You: "Who... who are you?"
+"Who... who are you?" you ask.
+__NL__
 ~ setFlag("player.actions.talked.to_bound_one_who", true)
-[The prisoner sighs and breaks into a coughing fit.]
+The prisoner sighs and breaks into a coughing fit.
 1700__PAUSE__
 Chained Prisoner: "A curious question indeed. If you were me, would you know?"
 
 * ["Just answer the question. Who are you?"]
     You: "Just answer the question. Who are you?"
-    [He smiles.]
-    Chained Prisoner: "Not one for nice, long conversations, are you? What, are you afraid we'll run out of time? There's plenty of time here. More than enough to share."
+    He smiles. "Not one for nice, long conversations, are you? What, are you afraid we'll run out of time? There's plenty of time here. More than enough to share."
     2400__PAUSE__
-    [Nothing happens.]
-    [The smile disappears.]
+    Nothing happens.
+    200__PAUSE__
+    The smile disappears.
     -> WHO_AGAIN
 
 * ["What does that mean?"]
     -> WHO_MEANING
 
 == WHO_MEANING ==
-You: "What does that mean?"
-Chained Prisoner: "After all these years in chains, it's good enough that you stay sane. But my mind has been half-wiped by Ossaneth. There's plenty of time though, to maybe get some of it back."
+"What does that mean?"
+"After all these years in chains, it's good enough that you stay sane. But my mind has been half-wiped by Ossaneth." He sighs. "There's plenty of time though, to maybe get some of it back."
 ~ setFlag("player.actions.talked.to_bound_one_mentioned_ossaneth", true)
 -> MAIN
 
@@ -215,8 +215,7 @@ Chainer Prisoner: "Then you understand. Kindness is often a cruelty to both."
 -> MAIN
 
 == LEAVE ==
-[You turn to leave.]
-[Before you do, the prisoner speaks up one last time.]
+You turn to leave. But before you do, the prisoner speaks up one last time.
 ~ temp past = hasFlag("player.actions.talked.to_bound_one_past")
 ~ temp self = hasFlag("player.actions.talked.to_bound_one_self")
 ~ temp help = hasFlag("player.actions.talked.to_bound_one_help")
@@ -237,12 +236,12 @@ Chainer Prisoner: "Then you understand. Kindness is often a cruelty to both."
 - help:
     Chainer Prisoner: "You tried to help. That’s rare. Don’t let this world burn that out of you."
 - else:
-    Chainer Prisoner: "You came, stared, and left. Like all the rest. If you ever come back - come back as more."
+    "You came, stared, and left. Like all the rest. If you ever come back - come back as more."
 }
 
 ~ setFlag("player.actions.talked.to_bound_one", true)
 
-You're back at the foot of the slope.
+You stand again in front of the circle of candles.
 __END__
 -> END
 

@@ -4,27 +4,22 @@ Then, out of nothing, a god materialises — a single massive eye staring you do
 __NL__  
 Is this... Ossaneth's <i>true form?</i>  
 __NL__  
-
 It speaks.  
-__NL__  
-#slow:18
-"Enjoyed... your... stay?"  
-__NL__  
+__NL__
 #slow:17
 There is no direction the voice, deep yet neutral, comes from — for it comes from every direction.  
 __NL__  
 
 You try to move. To run. To hide. To close your own eyes... and forget, even for a <i>moment</i>, what is happening.
-__NL__  
 But you cannot. The gaze holds you frozen in place, as though you are a stone statue — 17<~>still, silent, and easily broken.</~>  
-__NL__  
+__NL__
+#slow:18
+"Enjoyed... your... stay?"
 
 * ["Y-yes."]
     -> YES  
 * ["N-no."] 
     -> NO  
-* ["What are you going to do to me?"]
-    -> WHAT  
 
 == YES ==  
 You find the courage to speak, somehow. "Y-yes."  
@@ -52,18 +47,6 @@ __NL__
 __NL__  
 500__PAUSE__  
 "Either way... most unfortunately, your time here is up."  
-__NL__  
-1200__PAUSE__  
--> CONCLUSION  
-
-== WHAT ==  
-You find the courage to speak, somehow. "What are you going to do to me?"  
-__NL__  
-
-There's a soft rumble around you, almost as if the eye — Ossaneth — were frowning.  
-__NL__  
-#slow:16
-"Most unfortunately, your time here is up."  
 __NL__  
 1200__PAUSE__  
 -> CONCLUSION  
@@ -114,6 +97,6 @@ __NL__
 #slow:19
 Perhaps for the last time.  
 __NL__  
-
+3000__PAUSE__
 __END__
 -> END
